@@ -1,0 +1,2353 @@
+{
+  "schema_version": 1,
+  "qrels_path": "tests\\eval\\qrels.jsonl",
+  "vault_path": "tests\\retrieval\\synthetic_public_vault",
+  "db_path": "src\\memory\\sqlite\\eval.db",
+  "embedder": "ollama",
+  "reranker": "bge",
+  "tier": "S1",
+  "k": 10,
+  "k_in": 50,
+  "n_queries": 25,
+  "variants": {
+    "bm25_only": {
+      "macro": {
+        "recall_at_10": 1.0,
+        "mrr_at_10": 0.9333333333333332,
+        "ndcg_at_10": 0.9472632118516441
+      },
+      "per_query": [
+        {
+          "qid": "q01",
+          "query": "federal clearance interval the largest buyouts must observe before consummation in the united states",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "antitrust_review_basics"
+          ],
+          "retrieved": [
+            "antitrust_review_basics",
+            "acme_q3_release",
+            "wonderland_capital_overview",
+            "etf_structure_primer",
+            "ipo_process_overview",
+            "fed_minutes_summary",
+            "sox_compliance_intro",
+            "options_market_basics",
+            "exchange_listing_standards",
+            "dividend_policy_intro"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q02",
+          "query": "how long must a public bid for outstanding stock stay open",
+          "style": "paraphrase",
+          "relevant": [
+            "tender_offer_mechanics"
+          ],
+          "retrieved": [
+            "tender_offer_mechanics",
+            "ipo_process_overview",
+            "etf_structure_primer",
+            "sox_compliance_intro",
+            "share_buyback_mechanics",
+            "wonderland_capital_overview",
+            "fed_minutes_summary",
+            "earnings_call_format",
+            "exchange_listing_standards",
+            "antitrust_review_basics"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q03",
+          "query": "regulatory shelter limiting market impact when a corporation purchases its own equity in ordinary trading",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "share_buyback_mechanics"
+          ],
+          "retrieved": [
+            "share_buyback_mechanics",
+            "market_structure_primer",
+            "options_market_basics",
+            "dividend_policy_intro",
+            "wonderland_capital_overview",
+            "ipo_process_overview",
+            "proxy_voting_overview",
+            "tender_offer_mechanics",
+            "corporate_governance_intro",
+            "accounting_standards_primer"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q04",
+          "query": "buying back stock through an investment bank intermediary",
+          "style": "paraphrase",
+          "relevant": [
+            "share_buyback_mechanics"
+          ],
+          "retrieved": [
+            "etf_structure_primer",
+            "share_buyback_mechanics",
+            "ipo_process_overview",
+            "wonderland_capital_overview",
+            "corporate_governance_intro",
+            "proxy_voting_overview",
+            "antitrust_review_basics",
+            "options_market_basics",
+            "acme_q3_release",
+            "sox_compliance_intro"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 0.5,
+          "ndcg_at_10": 0.6309297535714575
+        },
+        {
+          "qid": "q05",
+          "query": "cutoff that determines which holders receive an upcoming cash distribution",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "dividend_policy_intro"
+          ],
+          "retrieved": [
+            "dividend_policy_intro",
+            "proxy_voting_overview",
+            "etf_structure_primer",
+            "ipo_process_overview",
+            "antitrust_review_basics",
+            "sec_edgar_workflow",
+            "securities_lending_basics",
+            "exchange_listing_standards",
+            "accounting_standards_primer",
+            "corporate_governance_intro"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q06",
+          "query": "when does the stock stop carrying the right to the upcoming payment",
+          "style": "paraphrase",
+          "relevant": [
+            "dividend_policy_intro"
+          ],
+          "retrieved": [
+            "dividend_policy_intro",
+            "market_structure_primer",
+            "earnings_call_format",
+            "accounting_standards_primer",
+            "etf_structure_primer",
+            "corporate_governance_intro",
+            "acme_q3_release",
+            "securities_lending_basics",
+            "share_buyback_mechanics",
+            "tender_offer_mechanics"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q07",
+          "query": "outside accountant report on the strength of internal financial controls required of larger registrants",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "sox_compliance_intro"
+          ],
+          "retrieved": [
+            "sox_compliance_intro",
+            "audit_committee_overview",
+            "accounting_standards_primer",
+            "ipo_process_overview",
+            "proxy_voting_overview",
+            "corporate_governance_intro",
+            "sec_edgar_workflow",
+            "exchange_listing_standards",
+            "earnings_call_format",
+            "fed_minutes_summary"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q08",
+          "query": "executive certification of periodic reports SOX",
+          "style": "paraphrase",
+          "relevant": [
+            "sox_compliance_intro"
+          ],
+          "retrieved": [
+            "sox_compliance_intro",
+            "earnings_call_format",
+            "antitrust_review_basics",
+            "tender_offer_mechanics",
+            "proxy_voting_overview",
+            "audit_committee_overview",
+            "share_buyback_mechanics",
+            "corporate_governance_intro",
+            "sec_edgar_workflow",
+            "acme_q3_release"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q09",
+          "query": "institutional marketing tour supporting pricing of a first-time share issuance",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "ipo_process_overview"
+          ],
+          "retrieved": [
+            "share_buyback_mechanics",
+            "options_market_basics",
+            "ipo_process_overview",
+            "exchange_listing_standards",
+            "etf_structure_primer",
+            "sec_edgar_workflow",
+            "tender_offer_mechanics",
+            "securities_lending_basics",
+            "market_structure_primer",
+            "antitrust_review_basics"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 0.3333333333333333,
+          "ndcg_at_10": 0.5
+        },
+        {
+          "qid": "q10",
+          "query": "taking a private company public",
+          "style": "paraphrase",
+          "relevant": [
+            "ipo_process_overview"
+          ],
+          "retrieved": [
+            "ipo_process_overview",
+            "acme_q3_release",
+            "earnings_call_format",
+            "audit_committee_overview",
+            "sec_edgar_workflow",
+            "tender_offer_mechanics",
+            "share_buyback_mechanics",
+            "corporate_governance_intro",
+            "proxy_voting_overview",
+            "etf_structure_primer"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q11",
+          "query": "specialist firms that mint and redeem shares of a basket-tracking listed fund using physical constituent baskets",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "etf_structure_primer"
+          ],
+          "retrieved": [
+            "etf_structure_primer",
+            "exchange_listing_standards",
+            "securities_lending_basics",
+            "options_market_basics",
+            "accounting_standards_primer",
+            "corporate_governance_intro",
+            "wonderland_capital_overview",
+            "fed_minutes_summary",
+            "share_buyback_mechanics",
+            "ipo_process_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q12",
+          "query": "intraday traded fund tracks basket NAV",
+          "style": "paraphrase",
+          "relevant": [
+            "etf_structure_primer"
+          ],
+          "retrieved": [
+            "etf_structure_primer",
+            "fed_minutes_summary",
+            "securities_lending_basics",
+            "options_market_basics",
+            "market_structure_primer",
+            "sec_edgar_workflow",
+            "ipo_process_overview",
+            "share_buyback_mechanics",
+            "antitrust_review_basics",
+            "wonderland_capital_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q13",
+          "query": "summarized policy deliberations released weeks after the central bank rate decision",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "fed_minutes_summary"
+          ],
+          "retrieved": [
+            "fed_minutes_summary",
+            "share_buyback_mechanics",
+            "options_market_basics",
+            "market_structure_primer",
+            "acme_q3_release",
+            "dividend_policy_intro",
+            "ipo_process_overview",
+            "accounting_standards_primer",
+            "earnings_call_format",
+            "audit_committee_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q14",
+          "query": "central bank rate-setting committee press conference cadence",
+          "style": "paraphrase",
+          "relevant": [
+            "fed_minutes_summary"
+          ],
+          "retrieved": [
+            "fed_minutes_summary",
+            "share_buyback_mechanics",
+            "options_market_basics",
+            "audit_committee_overview",
+            "accounting_standards_primer",
+            "earnings_call_format",
+            "ipo_process_overview",
+            "exchange_listing_standards",
+            "corporate_governance_intro"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q15",
+          "query": "execution venue routing that must respect the best displayed bid or ask across competing markets",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "market_structure_primer"
+          ],
+          "retrieved": [
+            "market_structure_primer",
+            "exchange_listing_standards",
+            "ipo_process_overview",
+            "sox_compliance_intro",
+            "tender_offer_mechanics",
+            "share_buyback_mechanics",
+            "proxy_voting_overview",
+            "sec_edgar_workflow",
+            "securities_lending_basics",
+            "accounting_standards_primer"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q16",
+          "query": "shortened post-trade clearing window for cash equities adopted in 2024",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "market_structure_primer"
+          ],
+          "retrieved": [
+            "options_market_basics",
+            "market_structure_primer",
+            "wonderland_capital_overview",
+            "dividend_policy_intro",
+            "securities_lending_basics",
+            "ipo_process_overview",
+            "proxy_voting_overview",
+            "tender_offer_mechanics",
+            "antitrust_review_basics",
+            "exchange_listing_standards"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 0.5,
+          "ndcg_at_10": 0.6309297535714575
+        },
+        {
+          "qid": "q17",
+          "query": "regulation requiring identical consideration to every holder during a public bid for shares",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "tender_offer_mechanics"
+          ],
+          "retrieved": [
+            "tender_offer_mechanics",
+            "exchange_listing_standards",
+            "ipo_process_overview",
+            "dividend_policy_intro",
+            "earnings_call_format",
+            "audit_committee_overview",
+            "share_buyback_mechanics",
+            "accounting_standards_primer",
+            "options_market_basics",
+            "market_structure_primer"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q18",
+          "query": "accrual standard governing when top-line is booked under a contract with a customer",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "accounting_standards_primer"
+          ],
+          "retrieved": [
+            "accounting_standards_primer",
+            "dividend_policy_intro",
+            "options_market_basics",
+            "corporate_governance_intro",
+            "earnings_call_format",
+            "share_buyback_mechanics",
+            "ipo_process_overview",
+            "acme_q3_release",
+            "etf_structure_primer",
+            "tender_offer_mechanics"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q19",
+          "query": "lessee right-of-use asset balance sheet recognition",
+          "style": "paraphrase",
+          "relevant": [
+            "accounting_standards_primer"
+          ],
+          "retrieved": [
+            "accounting_standards_primer",
+            "etf_structure_primer",
+            "corporate_governance_intro",
+            "dividend_policy_intro",
+            "ipo_process_overview",
+            "market_structure_primer",
+            "sox_compliance_intro",
+            "antitrust_review_basics",
+            "options_market_basics",
+            "exchange_listing_standards"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q20",
+          "query": "board oversight body for the accountant relationship plus internal complaint mechanism mandated after 2002 reform",
+          "style": "multi-page-hard",
+          "relevant": [
+            "audit_committee_overview",
+            "sox_compliance_intro"
+          ],
+          "retrieved": [
+            "audit_committee_overview",
+            "accounting_standards_primer",
+            "sox_compliance_intro",
+            "antitrust_review_basics",
+            "acme_q3_release",
+            "corporate_governance_intro",
+            "share_buyback_mechanics",
+            "tender_offer_mechanics",
+            "fed_minutes_summary",
+            "market_structure_primer"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 0.9197207891481876
+        },
+        {
+          "qid": "q21",
+          "query": "covering analysts question and answer session quarterly results",
+          "style": "paraphrase",
+          "relevant": [
+            "earnings_call_format"
+          ],
+          "retrieved": [
+            "earnings_call_format",
+            "sec_edgar_workflow",
+            "wonderland_capital_overview",
+            "proxy_voting_overview",
+            "acme_q3_release",
+            "corporate_governance_intro",
+            "options_market_basics",
+            "securities_lending_basics",
+            "share_buyback_mechanics",
+            "sox_compliance_intro"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q22",
+          "query": "centrally cleared derivative contracts conferring the right to buy or sell shares at a referenced level",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "options_market_basics"
+          ],
+          "retrieved": [
+            "options_market_basics",
+            "share_buyback_mechanics",
+            "tender_offer_mechanics",
+            "securities_lending_basics",
+            "exchange_listing_standards",
+            "corporate_governance_intro",
+            "dividend_policy_intro",
+            "fed_minutes_summary",
+            "accounting_standards_primer",
+            "proxy_voting_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q23",
+          "query": "borrow shares to deliver against short sale settlement obligations",
+          "style": "paraphrase",
+          "relevant": [
+            "securities_lending_basics"
+          ],
+          "retrieved": [
+            "securities_lending_basics",
+            "share_buyback_mechanics",
+            "etf_structure_primer",
+            "market_structure_primer",
+            "accounting_standards_primer",
+            "fed_minutes_summary",
+            "acme_q3_release",
+            "earnings_call_format",
+            "tender_offer_mechanics",
+            "dividend_policy_intro"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q24",
+          "query": "registered investment manager that publishes its brochure on the federal regulator's adviser database",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "wonderland_capital_overview"
+          ],
+          "retrieved": [
+            "wonderland_capital_overview",
+            "etf_structure_primer",
+            "fed_minutes_summary",
+            "sec_edgar_workflow",
+            "sox_compliance_intro",
+            "audit_committee_overview",
+            "ipo_process_overview",
+            "market_structure_primer",
+            "options_market_basics",
+            "acme_q3_release"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q25",
+          "query": "stockholder-initiated agenda items at the yearly governance gathering",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "proxy_voting_overview"
+          ],
+          "retrieved": [
+            "proxy_voting_overview",
+            "ipo_process_overview",
+            "corporate_governance_intro",
+            "exchange_listing_standards",
+            "antitrust_review_basics",
+            "tender_offer_mechanics",
+            "accounting_standards_primer",
+            "securities_lending_basics",
+            "share_buyback_mechanics",
+            "wonderland_capital_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        }
+      ]
+    },
+    "vec_only": {
+      "macro": {
+        "recall_at_10": 1.0,
+        "mrr_at_10": 0.9257142857142857,
+        "ndcg_at_10": 0.9438077136190499
+      },
+      "per_query": [
+        {
+          "qid": "q01",
+          "query": "federal clearance interval the largest buyouts must observe before consummation in the united states",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "antitrust_review_basics"
+          ],
+          "retrieved": [
+            "share_buyback_mechanics",
+            "dividend_policy_intro",
+            "exchange_listing_standards",
+            "fed_minutes_summary",
+            "ipo_process_overview",
+            "securities_lending_basics",
+            "antitrust_review_basics",
+            "tender_offer_mechanics",
+            "wonderland_capital_overview",
+            "earnings_call_format"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 0.14285714285714285,
+          "ndcg_at_10": 0.3333333333333333
+        },
+        {
+          "qid": "q02",
+          "query": "how long must a public bid for outstanding stock stay open",
+          "style": "paraphrase",
+          "relevant": [
+            "tender_offer_mechanics"
+          ],
+          "retrieved": [
+            "tender_offer_mechanics",
+            "exchange_listing_standards",
+            "ipo_process_overview",
+            "earnings_call_format",
+            "wonderland_capital_overview",
+            "share_buyback_mechanics",
+            "options_market_basics",
+            "accounting_standards_primer",
+            "antitrust_review_basics",
+            "sec_edgar_workflow"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q03",
+          "query": "regulatory shelter limiting market impact when a corporation purchases its own equity in ordinary trading",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "share_buyback_mechanics"
+          ],
+          "retrieved": [
+            "share_buyback_mechanics",
+            "etf_structure_primer",
+            "market_structure_primer",
+            "ipo_process_overview",
+            "securities_lending_basics",
+            "options_market_basics",
+            "dividend_policy_intro",
+            "exchange_listing_standards",
+            "antitrust_review_basics",
+            "tender_offer_mechanics"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q04",
+          "query": "buying back stock through an investment bank intermediary",
+          "style": "paraphrase",
+          "relevant": [
+            "share_buyback_mechanics"
+          ],
+          "retrieved": [
+            "share_buyback_mechanics",
+            "etf_structure_primer",
+            "wonderland_capital_overview",
+            "securities_lending_basics",
+            "ipo_process_overview",
+            "dividend_policy_intro",
+            "corporate_governance_intro",
+            "options_market_basics",
+            "tender_offer_mechanics",
+            "market_structure_primer"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q05",
+          "query": "cutoff that determines which holders receive an upcoming cash distribution",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "dividend_policy_intro"
+          ],
+          "retrieved": [
+            "dividend_policy_intro",
+            "securities_lending_basics",
+            "fed_minutes_summary",
+            "etf_structure_primer",
+            "exchange_listing_standards",
+            "tender_offer_mechanics",
+            "accounting_standards_primer",
+            "acme_q3_release",
+            "earnings_call_format",
+            "ipo_process_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q06",
+          "query": "when does the stock stop carrying the right to the upcoming payment",
+          "style": "paraphrase",
+          "relevant": [
+            "dividend_policy_intro"
+          ],
+          "retrieved": [
+            "dividend_policy_intro",
+            "market_structure_primer",
+            "ipo_process_overview",
+            "acme_q3_release",
+            "options_market_basics",
+            "securities_lending_basics",
+            "share_buyback_mechanics",
+            "tender_offer_mechanics",
+            "wonderland_capital_overview",
+            "etf_structure_primer"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q07",
+          "query": "outside accountant report on the strength of internal financial controls required of larger registrants",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "sox_compliance_intro"
+          ],
+          "retrieved": [
+            "sox_compliance_intro",
+            "audit_committee_overview",
+            "exchange_listing_standards",
+            "accounting_standards_primer",
+            "etf_structure_primer",
+            "corporate_governance_intro",
+            "sec_edgar_workflow",
+            "proxy_voting_overview",
+            "acme_q3_release",
+            "fed_minutes_summary"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q08",
+          "query": "executive certification of periodic reports SOX",
+          "style": "paraphrase",
+          "relevant": [
+            "sox_compliance_intro"
+          ],
+          "retrieved": [
+            "sox_compliance_intro",
+            "audit_committee_overview",
+            "sec_edgar_workflow",
+            "corporate_governance_intro",
+            "accounting_standards_primer",
+            "earnings_call_format",
+            "proxy_voting_overview",
+            "fed_minutes_summary",
+            "exchange_listing_standards",
+            "dividend_policy_intro"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q09",
+          "query": "institutional marketing tour supporting pricing of a first-time share issuance",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "ipo_process_overview"
+          ],
+          "retrieved": [
+            "ipo_process_overview",
+            "share_buyback_mechanics",
+            "exchange_listing_standards",
+            "etf_structure_primer",
+            "wonderland_capital_overview",
+            "acme_q3_release",
+            "securities_lending_basics",
+            "market_structure_primer",
+            "tender_offer_mechanics",
+            "corporate_governance_intro"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q10",
+          "query": "taking a private company public",
+          "style": "paraphrase",
+          "relevant": [
+            "ipo_process_overview"
+          ],
+          "retrieved": [
+            "ipo_process_overview",
+            "wonderland_capital_overview",
+            "earnings_call_format",
+            "accounting_standards_primer",
+            "tender_offer_mechanics",
+            "share_buyback_mechanics",
+            "corporate_governance_intro",
+            "exchange_listing_standards",
+            "sec_edgar_workflow",
+            "sox_compliance_intro"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q11",
+          "query": "specialist firms that mint and redeem shares of a basket-tracking listed fund using physical constituent baskets",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "etf_structure_primer"
+          ],
+          "retrieved": [
+            "etf_structure_primer",
+            "share_buyback_mechanics",
+            "securities_lending_basics",
+            "wonderland_capital_overview",
+            "corporate_governance_intro",
+            "dividend_policy_intro",
+            "market_structure_primer",
+            "exchange_listing_standards",
+            "ipo_process_overview",
+            "accounting_standards_primer"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q12",
+          "query": "intraday traded fund tracks basket NAV",
+          "style": "paraphrase",
+          "relevant": [
+            "etf_structure_primer"
+          ],
+          "retrieved": [
+            "etf_structure_primer",
+            "market_structure_primer",
+            "wonderland_capital_overview",
+            "ipo_process_overview",
+            "securities_lending_basics",
+            "dividend_policy_intro",
+            "share_buyback_mechanics",
+            "acme_q3_release",
+            "sec_edgar_workflow",
+            "fed_minutes_summary"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q13",
+          "query": "summarized policy deliberations released weeks after the central bank rate decision",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "fed_minutes_summary"
+          ],
+          "retrieved": [
+            "fed_minutes_summary",
+            "earnings_call_format",
+            "securities_lending_basics",
+            "market_structure_primer",
+            "wonderland_capital_overview",
+            "dividend_policy_intro",
+            "antitrust_review_basics",
+            "proxy_voting_overview",
+            "acme_q3_release",
+            "options_market_basics"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q14",
+          "query": "central bank rate-setting committee press conference cadence",
+          "style": "paraphrase",
+          "relevant": [
+            "fed_minutes_summary"
+          ],
+          "retrieved": [
+            "fed_minutes_summary",
+            "sox_compliance_intro",
+            "earnings_call_format",
+            "accounting_standards_primer",
+            "audit_committee_overview",
+            "acme_q3_release",
+            "corporate_governance_intro",
+            "ipo_process_overview",
+            "antitrust_review_basics",
+            "wonderland_capital_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q15",
+          "query": "execution venue routing that must respect the best displayed bid or ask across competing markets",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "market_structure_primer"
+          ],
+          "retrieved": [
+            "exchange_listing_standards",
+            "market_structure_primer",
+            "acme_q3_release",
+            "ipo_process_overview",
+            "tender_offer_mechanics",
+            "wonderland_capital_overview",
+            "options_market_basics",
+            "antitrust_review_basics",
+            "accounting_standards_primer",
+            "dividend_policy_intro"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 0.5,
+          "ndcg_at_10": 0.6309297535714575
+        },
+        {
+          "qid": "q16",
+          "query": "shortened post-trade clearing window for cash equities adopted in 2024",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "market_structure_primer"
+          ],
+          "retrieved": [
+            "market_structure_primer",
+            "wonderland_capital_overview",
+            "securities_lending_basics",
+            "options_market_basics",
+            "tender_offer_mechanics",
+            "dividend_policy_intro",
+            "share_buyback_mechanics",
+            "ipo_process_overview",
+            "acme_q3_release",
+            "fed_minutes_summary"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q17",
+          "query": "regulation requiring identical consideration to every holder during a public bid for shares",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "tender_offer_mechanics"
+          ],
+          "retrieved": [
+            "exchange_listing_standards",
+            "tender_offer_mechanics",
+            "ipo_process_overview",
+            "corporate_governance_intro",
+            "accounting_standards_primer",
+            "share_buyback_mechanics",
+            "earnings_call_format",
+            "sox_compliance_intro",
+            "wonderland_capital_overview",
+            "proxy_voting_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 0.5,
+          "ndcg_at_10": 0.6309297535714575
+        },
+        {
+          "qid": "q18",
+          "query": "accrual standard governing when top-line is booked under a contract with a customer",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "accounting_standards_primer"
+          ],
+          "retrieved": [
+            "accounting_standards_primer",
+            "tender_offer_mechanics",
+            "options_market_basics",
+            "ipo_process_overview",
+            "market_structure_primer",
+            "exchange_listing_standards",
+            "acme_q3_release",
+            "dividend_policy_intro",
+            "sox_compliance_intro",
+            "antitrust_review_basics"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q19",
+          "query": "lessee right-of-use asset balance sheet recognition",
+          "style": "paraphrase",
+          "relevant": [
+            "accounting_standards_primer"
+          ],
+          "retrieved": [
+            "accounting_standards_primer",
+            "securities_lending_basics",
+            "dividend_policy_intro",
+            "etf_structure_primer",
+            "wonderland_capital_overview",
+            "sec_edgar_workflow",
+            "exchange_listing_standards",
+            "sox_compliance_intro",
+            "ipo_process_overview",
+            "options_market_basics"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q20",
+          "query": "board oversight body for the accountant relationship plus internal complaint mechanism mandated after 2002 reform",
+          "style": "multi-page-hard",
+          "relevant": [
+            "audit_committee_overview",
+            "sox_compliance_intro"
+          ],
+          "retrieved": [
+            "sox_compliance_intro",
+            "audit_committee_overview",
+            "accounting_standards_primer",
+            "exchange_listing_standards",
+            "proxy_voting_overview",
+            "corporate_governance_intro",
+            "sec_edgar_workflow",
+            "fed_minutes_summary",
+            "dividend_policy_intro",
+            "wonderland_capital_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q21",
+          "query": "covering analysts question and answer session quarterly results",
+          "style": "paraphrase",
+          "relevant": [
+            "earnings_call_format"
+          ],
+          "retrieved": [
+            "earnings_call_format",
+            "fed_minutes_summary",
+            "sec_edgar_workflow",
+            "accounting_standards_primer",
+            "wonderland_capital_overview",
+            "corporate_governance_intro",
+            "ipo_process_overview",
+            "proxy_voting_overview",
+            "exchange_listing_standards",
+            "audit_committee_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q22",
+          "query": "centrally cleared derivative contracts conferring the right to buy or sell shares at a referenced level",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "options_market_basics"
+          ],
+          "retrieved": [
+            "options_market_basics",
+            "securities_lending_basics",
+            "dividend_policy_intro",
+            "tender_offer_mechanics",
+            "accounting_standards_primer",
+            "share_buyback_mechanics",
+            "exchange_listing_standards",
+            "etf_structure_primer",
+            "wonderland_capital_overview",
+            "ipo_process_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q23",
+          "query": "borrow shares to deliver against short sale settlement obligations",
+          "style": "paraphrase",
+          "relevant": [
+            "securities_lending_basics"
+          ],
+          "retrieved": [
+            "securities_lending_basics",
+            "share_buyback_mechanics",
+            "etf_structure_primer",
+            "tender_offer_mechanics",
+            "options_market_basics",
+            "dividend_policy_intro",
+            "acme_q3_release",
+            "ipo_process_overview",
+            "exchange_listing_standards",
+            "corporate_governance_intro"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q24",
+          "query": "registered investment manager that publishes its brochure on the federal regulator's adviser database",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "wonderland_capital_overview"
+          ],
+          "retrieved": [
+            "wonderland_capital_overview",
+            "accounting_standards_primer",
+            "sec_edgar_workflow",
+            "securities_lending_basics",
+            "sox_compliance_intro",
+            "etf_structure_primer",
+            "ipo_process_overview",
+            "fed_minutes_summary",
+            "exchange_listing_standards",
+            "dividend_policy_intro"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q25",
+          "query": "stockholder-initiated agenda items at the yearly governance gathering",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "proxy_voting_overview"
+          ],
+          "retrieved": [
+            "proxy_voting_overview",
+            "corporate_governance_intro",
+            "ipo_process_overview",
+            "earnings_call_format",
+            "fed_minutes_summary",
+            "exchange_listing_standards",
+            "dividend_policy_intro",
+            "audit_committee_overview",
+            "wonderland_capital_overview",
+            "market_structure_primer"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        }
+      ]
+    },
+    "rrf": {
+      "macro": {
+        "recall_at_10": 1.0,
+        "mrr_at_10": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      "per_query": [
+        {
+          "qid": "q01",
+          "query": "federal clearance interval the largest buyouts must observe before consummation in the united states",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "antitrust_review_basics"
+          ],
+          "retrieved": [
+            "antitrust_review_basics",
+            "ipo_process_overview",
+            "fed_minutes_summary",
+            "wonderland_capital_overview",
+            "acme_q3_release",
+            "dividend_policy_intro",
+            "exchange_listing_standards",
+            "share_buyback_mechanics",
+            "tender_offer_mechanics",
+            "options_market_basics"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q02",
+          "query": "how long must a public bid for outstanding stock stay open",
+          "style": "paraphrase",
+          "relevant": [
+            "tender_offer_mechanics"
+          ],
+          "retrieved": [
+            "tender_offer_mechanics",
+            "ipo_process_overview",
+            "exchange_listing_standards",
+            "earnings_call_format",
+            "etf_structure_primer",
+            "share_buyback_mechanics",
+            "wonderland_capital_overview",
+            "sox_compliance_intro",
+            "fed_minutes_summary",
+            "antitrust_review_basics"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q03",
+          "query": "regulatory shelter limiting market impact when a corporation purchases its own equity in ordinary trading",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "share_buyback_mechanics"
+          ],
+          "retrieved": [
+            "share_buyback_mechanics",
+            "market_structure_primer",
+            "options_market_basics",
+            "dividend_policy_intro",
+            "etf_structure_primer",
+            "wonderland_capital_overview",
+            "securities_lending_basics",
+            "exchange_listing_standards",
+            "tender_offer_mechanics",
+            "ipo_process_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q04",
+          "query": "buying back stock through an investment bank intermediary",
+          "style": "paraphrase",
+          "relevant": [
+            "share_buyback_mechanics"
+          ],
+          "retrieved": [
+            "share_buyback_mechanics",
+            "etf_structure_primer",
+            "wonderland_capital_overview",
+            "ipo_process_overview",
+            "proxy_voting_overview",
+            "corporate_governance_intro",
+            "options_market_basics",
+            "sox_compliance_intro",
+            "securities_lending_basics",
+            "antitrust_review_basics"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q05",
+          "query": "cutoff that determines which holders receive an upcoming cash distribution",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "dividend_policy_intro"
+          ],
+          "retrieved": [
+            "dividend_policy_intro",
+            "etf_structure_primer",
+            "securities_lending_basics",
+            "exchange_listing_standards",
+            "ipo_process_overview",
+            "accounting_standards_primer",
+            "share_buyback_mechanics",
+            "options_market_basics",
+            "proxy_voting_overview",
+            "sec_edgar_workflow"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q06",
+          "query": "when does the stock stop carrying the right to the upcoming payment",
+          "style": "paraphrase",
+          "relevant": [
+            "dividend_policy_intro"
+          ],
+          "retrieved": [
+            "dividend_policy_intro",
+            "acme_q3_release",
+            "securities_lending_basics",
+            "market_structure_primer",
+            "accounting_standards_primer",
+            "tender_offer_mechanics",
+            "ipo_process_overview",
+            "share_buyback_mechanics",
+            "corporate_governance_intro",
+            "etf_structure_primer"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q07",
+          "query": "outside accountant report on the strength of internal financial controls required of larger registrants",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "sox_compliance_intro"
+          ],
+          "retrieved": [
+            "sox_compliance_intro",
+            "audit_committee_overview",
+            "accounting_standards_primer",
+            "exchange_listing_standards",
+            "proxy_voting_overview",
+            "sec_edgar_workflow",
+            "earnings_call_format",
+            "ipo_process_overview",
+            "fed_minutes_summary",
+            "corporate_governance_intro"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q08",
+          "query": "executive certification of periodic reports SOX",
+          "style": "paraphrase",
+          "relevant": [
+            "sox_compliance_intro"
+          ],
+          "retrieved": [
+            "sox_compliance_intro",
+            "sec_edgar_workflow",
+            "earnings_call_format",
+            "audit_committee_overview",
+            "proxy_voting_overview",
+            "corporate_governance_intro",
+            "antitrust_review_basics",
+            "exchange_listing_standards",
+            "fed_minutes_summary",
+            "acme_q3_release"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q09",
+          "query": "institutional marketing tour supporting pricing of a first-time share issuance",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "ipo_process_overview"
+          ],
+          "retrieved": [
+            "ipo_process_overview",
+            "exchange_listing_standards",
+            "share_buyback_mechanics",
+            "etf_structure_primer",
+            "options_market_basics",
+            "tender_offer_mechanics",
+            "securities_lending_basics",
+            "market_structure_primer",
+            "acme_q3_release",
+            "sec_edgar_workflow"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q10",
+          "query": "taking a private company public",
+          "style": "paraphrase",
+          "relevant": [
+            "ipo_process_overview"
+          ],
+          "retrieved": [
+            "ipo_process_overview",
+            "earnings_call_format",
+            "tender_offer_mechanics",
+            "share_buyback_mechanics",
+            "sec_edgar_workflow",
+            "corporate_governance_intro",
+            "wonderland_capital_overview",
+            "accounting_standards_primer",
+            "proxy_voting_overview",
+            "sox_compliance_intro"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q11",
+          "query": "specialist firms that mint and redeem shares of a basket-tracking listed fund using physical constituent baskets",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "etf_structure_primer"
+          ],
+          "retrieved": [
+            "etf_structure_primer",
+            "securities_lending_basics",
+            "exchange_listing_standards",
+            "wonderland_capital_overview",
+            "corporate_governance_intro",
+            "share_buyback_mechanics",
+            "options_market_basics",
+            "accounting_standards_primer",
+            "fed_minutes_summary",
+            "market_structure_primer"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q12",
+          "query": "intraday traded fund tracks basket NAV",
+          "style": "paraphrase",
+          "relevant": [
+            "etf_structure_primer"
+          ],
+          "retrieved": [
+            "etf_structure_primer",
+            "securities_lending_basics",
+            "market_structure_primer",
+            "fed_minutes_summary",
+            "ipo_process_overview",
+            "wonderland_capital_overview",
+            "sec_edgar_workflow",
+            "dividend_policy_intro",
+            "options_market_basics",
+            "share_buyback_mechanics"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q13",
+          "query": "summarized policy deliberations released weeks after the central bank rate decision",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "fed_minutes_summary"
+          ],
+          "retrieved": [
+            "fed_minutes_summary",
+            "market_structure_primer",
+            "share_buyback_mechanics",
+            "earnings_call_format",
+            "dividend_policy_intro",
+            "accounting_standards_primer",
+            "acme_q3_release",
+            "ipo_process_overview",
+            "proxy_voting_overview",
+            "wonderland_capital_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q14",
+          "query": "central bank rate-setting committee press conference cadence",
+          "style": "paraphrase",
+          "relevant": [
+            "fed_minutes_summary"
+          ],
+          "retrieved": [
+            "fed_minutes_summary",
+            "earnings_call_format",
+            "audit_committee_overview",
+            "share_buyback_mechanics",
+            "corporate_governance_intro",
+            "accounting_standards_primer",
+            "ipo_process_overview",
+            "exchange_listing_standards",
+            "sox_compliance_intro",
+            "options_market_basics"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q15",
+          "query": "execution venue routing that must respect the best displayed bid or ask across competing markets",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "market_structure_primer"
+          ],
+          "retrieved": [
+            "market_structure_primer",
+            "exchange_listing_standards",
+            "ipo_process_overview",
+            "tender_offer_mechanics",
+            "share_buyback_mechanics",
+            "accounting_standards_primer",
+            "acme_q3_release",
+            "securities_lending_basics",
+            "dividend_policy_intro",
+            "antitrust_review_basics"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q16",
+          "query": "shortened post-trade clearing window for cash equities adopted in 2024",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "market_structure_primer"
+          ],
+          "retrieved": [
+            "market_structure_primer",
+            "options_market_basics",
+            "wonderland_capital_overview",
+            "securities_lending_basics",
+            "ipo_process_overview",
+            "dividend_policy_intro",
+            "acme_q3_release",
+            "etf_structure_primer",
+            "antitrust_review_basics",
+            "tender_offer_mechanics"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q17",
+          "query": "regulation requiring identical consideration to every holder during a public bid for shares",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "tender_offer_mechanics"
+          ],
+          "retrieved": [
+            "tender_offer_mechanics",
+            "exchange_listing_standards",
+            "ipo_process_overview",
+            "earnings_call_format",
+            "share_buyback_mechanics",
+            "dividend_policy_intro",
+            "corporate_governance_intro",
+            "sox_compliance_intro",
+            "etf_structure_primer",
+            "audit_committee_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q18",
+          "query": "accrual standard governing when top-line is booked under a contract with a customer",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "accounting_standards_primer"
+          ],
+          "retrieved": [
+            "accounting_standards_primer",
+            "options_market_basics",
+            "dividend_policy_intro",
+            "ipo_process_overview",
+            "exchange_listing_standards",
+            "share_buyback_mechanics",
+            "tender_offer_mechanics",
+            "corporate_governance_intro",
+            "market_structure_primer",
+            "antitrust_review_basics"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q19",
+          "query": "lessee right-of-use asset balance sheet recognition",
+          "style": "paraphrase",
+          "relevant": [
+            "accounting_standards_primer"
+          ],
+          "retrieved": [
+            "accounting_standards_primer",
+            "dividend_policy_intro",
+            "etf_structure_primer",
+            "sox_compliance_intro",
+            "ipo_process_overview",
+            "options_market_basics",
+            "securities_lending_basics",
+            "exchange_listing_standards",
+            "corporate_governance_intro",
+            "proxy_voting_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q20",
+          "query": "board oversight body for the accountant relationship plus internal complaint mechanism mandated after 2002 reform",
+          "style": "multi-page-hard",
+          "relevant": [
+            "audit_committee_overview",
+            "sox_compliance_intro"
+          ],
+          "retrieved": [
+            "audit_committee_overview",
+            "sox_compliance_intro",
+            "accounting_standards_primer",
+            "corporate_governance_intro",
+            "antitrust_review_basics",
+            "fed_minutes_summary",
+            "sec_edgar_workflow",
+            "exchange_listing_standards",
+            "acme_q3_release",
+            "dividend_policy_intro"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q21",
+          "query": "covering analysts question and answer session quarterly results",
+          "style": "paraphrase",
+          "relevant": [
+            "earnings_call_format"
+          ],
+          "retrieved": [
+            "earnings_call_format",
+            "sec_edgar_workflow",
+            "wonderland_capital_overview",
+            "corporate_governance_intro",
+            "audit_committee_overview",
+            "acme_q3_release",
+            "fed_minutes_summary",
+            "sox_compliance_intro",
+            "exchange_listing_standards",
+            "accounting_standards_primer"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q22",
+          "query": "centrally cleared derivative contracts conferring the right to buy or sell shares at a referenced level",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "options_market_basics"
+          ],
+          "retrieved": [
+            "options_market_basics",
+            "share_buyback_mechanics",
+            "tender_offer_mechanics",
+            "dividend_policy_intro",
+            "exchange_listing_standards",
+            "securities_lending_basics",
+            "accounting_standards_primer",
+            "corporate_governance_intro",
+            "etf_structure_primer",
+            "wonderland_capital_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q23",
+          "query": "borrow shares to deliver against short sale settlement obligations",
+          "style": "paraphrase",
+          "relevant": [
+            "securities_lending_basics"
+          ],
+          "retrieved": [
+            "securities_lending_basics",
+            "share_buyback_mechanics",
+            "etf_structure_primer",
+            "tender_offer_mechanics",
+            "acme_q3_release",
+            "dividend_policy_intro",
+            "market_structure_primer",
+            "options_market_basics",
+            "accounting_standards_primer",
+            "ipo_process_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q24",
+          "query": "registered investment manager that publishes its brochure on the federal regulator's adviser database",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "wonderland_capital_overview"
+          ],
+          "retrieved": [
+            "wonderland_capital_overview",
+            "sec_edgar_workflow",
+            "etf_structure_primer",
+            "sox_compliance_intro",
+            "fed_minutes_summary",
+            "ipo_process_overview",
+            "audit_committee_overview",
+            "accounting_standards_primer",
+            "earnings_call_format",
+            "exchange_listing_standards"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q25",
+          "query": "stockholder-initiated agenda items at the yearly governance gathering",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "proxy_voting_overview"
+          ],
+          "retrieved": [
+            "proxy_voting_overview",
+            "corporate_governance_intro",
+            "exchange_listing_standards",
+            "accounting_standards_primer",
+            "ipo_process_overview",
+            "earnings_call_format",
+            "dividend_policy_intro",
+            "fed_minutes_summary",
+            "securities_lending_basics",
+            "audit_committee_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        }
+      ]
+    },
+    "rrf_rerank": {
+      "macro": {
+        "recall_at_10": 1.0,
+        "mrr_at_10": 0.98,
+        "ndcg_at_10": 0.9852371901428583
+      },
+      "per_query": [
+        {
+          "qid": "q01",
+          "query": "federal clearance interval the largest buyouts must observe before consummation in the united states",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "antitrust_review_basics"
+          ],
+          "retrieved": [
+            "antitrust_review_basics",
+            "fed_minutes_summary",
+            "share_buyback_mechanics",
+            "tender_offer_mechanics",
+            "options_market_basics",
+            "acme_q3_release",
+            "wonderland_capital_overview",
+            "exchange_listing_standards",
+            "sox_compliance_intro",
+            "market_structure_primer"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q02",
+          "query": "how long must a public bid for outstanding stock stay open",
+          "style": "paraphrase",
+          "relevant": [
+            "tender_offer_mechanics"
+          ],
+          "retrieved": [
+            "tender_offer_mechanics",
+            "ipo_process_overview",
+            "antitrust_review_basics",
+            "exchange_listing_standards",
+            "fed_minutes_summary",
+            "sec_edgar_workflow",
+            "share_buyback_mechanics",
+            "market_structure_primer",
+            "wonderland_capital_overview",
+            "acme_q3_release"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q03",
+          "query": "regulatory shelter limiting market impact when a corporation purchases its own equity in ordinary trading",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "share_buyback_mechanics"
+          ],
+          "retrieved": [
+            "share_buyback_mechanics",
+            "options_market_basics",
+            "tender_offer_mechanics",
+            "exchange_listing_standards",
+            "market_structure_primer",
+            "corporate_governance_intro",
+            "ipo_process_overview",
+            "dividend_policy_intro",
+            "wonderland_capital_overview",
+            "proxy_voting_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q04",
+          "query": "buying back stock through an investment bank intermediary",
+          "style": "paraphrase",
+          "relevant": [
+            "share_buyback_mechanics"
+          ],
+          "retrieved": [
+            "share_buyback_mechanics",
+            "etf_structure_primer",
+            "wonderland_capital_overview",
+            "ipo_process_overview",
+            "tender_offer_mechanics",
+            "securities_lending_basics",
+            "accounting_standards_primer",
+            "dividend_policy_intro",
+            "options_market_basics",
+            "antitrust_review_basics"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q05",
+          "query": "cutoff that determines which holders receive an upcoming cash distribution",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "dividend_policy_intro"
+          ],
+          "retrieved": [
+            "dividend_policy_intro",
+            "exchange_listing_standards",
+            "tender_offer_mechanics",
+            "proxy_voting_overview",
+            "corporate_governance_intro",
+            "antitrust_review_basics",
+            "etf_structure_primer",
+            "market_structure_primer",
+            "securities_lending_basics",
+            "share_buyback_mechanics"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q06",
+          "query": "when does the stock stop carrying the right to the upcoming payment",
+          "style": "paraphrase",
+          "relevant": [
+            "dividend_policy_intro"
+          ],
+          "retrieved": [
+            "dividend_policy_intro",
+            "tender_offer_mechanics",
+            "antitrust_review_basics",
+            "share_buyback_mechanics",
+            "ipo_process_overview",
+            "fed_minutes_summary",
+            "market_structure_primer",
+            "wonderland_capital_overview",
+            "etf_structure_primer",
+            "options_market_basics"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q07",
+          "query": "outside accountant report on the strength of internal financial controls required of larger registrants",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "sox_compliance_intro"
+          ],
+          "retrieved": [
+            "sox_compliance_intro",
+            "audit_committee_overview",
+            "earnings_call_format",
+            "options_market_basics",
+            "sec_edgar_workflow",
+            "acme_q3_release",
+            "proxy_voting_overview",
+            "antitrust_review_basics",
+            "accounting_standards_primer",
+            "exchange_listing_standards"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q08",
+          "query": "executive certification of periodic reports SOX",
+          "style": "paraphrase",
+          "relevant": [
+            "sox_compliance_intro"
+          ],
+          "retrieved": [
+            "sox_compliance_intro",
+            "sec_edgar_workflow",
+            "earnings_call_format",
+            "exchange_listing_standards",
+            "corporate_governance_intro",
+            "audit_committee_overview",
+            "acme_q3_release",
+            "proxy_voting_overview",
+            "antitrust_review_basics",
+            "wonderland_capital_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q09",
+          "query": "institutional marketing tour supporting pricing of a first-time share issuance",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "ipo_process_overview"
+          ],
+          "retrieved": [
+            "ipo_process_overview",
+            "tender_offer_mechanics",
+            "market_structure_primer",
+            "corporate_governance_intro",
+            "share_buyback_mechanics",
+            "antitrust_review_basics",
+            "options_market_basics",
+            "securities_lending_basics",
+            "etf_structure_primer",
+            "accounting_standards_primer"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q10",
+          "query": "taking a private company public",
+          "style": "paraphrase",
+          "relevant": [
+            "ipo_process_overview"
+          ],
+          "retrieved": [
+            "ipo_process_overview",
+            "earnings_call_format",
+            "tender_offer_mechanics",
+            "sec_edgar_workflow",
+            "sox_compliance_intro",
+            "audit_committee_overview",
+            "proxy_voting_overview",
+            "exchange_listing_standards",
+            "accounting_standards_primer",
+            "acme_q3_release"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q11",
+          "query": "specialist firms that mint and redeem shares of a basket-tracking listed fund using physical constituent baskets",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "etf_structure_primer"
+          ],
+          "retrieved": [
+            "etf_structure_primer",
+            "securities_lending_basics",
+            "sox_compliance_intro",
+            "wonderland_capital_overview",
+            "share_buyback_mechanics",
+            "tender_offer_mechanics",
+            "dividend_policy_intro",
+            "audit_committee_overview",
+            "fed_minutes_summary",
+            "options_market_basics"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q12",
+          "query": "intraday traded fund tracks basket NAV",
+          "style": "paraphrase",
+          "relevant": [
+            "etf_structure_primer"
+          ],
+          "retrieved": [
+            "etf_structure_primer",
+            "securities_lending_basics",
+            "antitrust_review_basics",
+            "sec_edgar_workflow",
+            "ipo_process_overview",
+            "share_buyback_mechanics",
+            "options_market_basics",
+            "dividend_policy_intro",
+            "market_structure_primer",
+            "exchange_listing_standards"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q13",
+          "query": "summarized policy deliberations released weeks after the central bank rate decision",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "fed_minutes_summary"
+          ],
+          "retrieved": [
+            "fed_minutes_summary",
+            "earnings_call_format",
+            "acme_q3_release",
+            "dividend_policy_intro",
+            "antitrust_review_basics",
+            "tender_offer_mechanics",
+            "sox_compliance_intro",
+            "market_structure_primer",
+            "corporate_governance_intro",
+            "proxy_voting_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q14",
+          "query": "central bank rate-setting committee press conference cadence",
+          "style": "paraphrase",
+          "relevant": [
+            "fed_minutes_summary"
+          ],
+          "retrieved": [
+            "fed_minutes_summary",
+            "earnings_call_format",
+            "acme_q3_release",
+            "audit_committee_overview",
+            "market_structure_primer",
+            "sox_compliance_intro",
+            "securities_lending_basics",
+            "accounting_standards_primer",
+            "dividend_policy_intro",
+            "tender_offer_mechanics"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q15",
+          "query": "execution venue routing that must respect the best displayed bid or ask across competing markets",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "market_structure_primer"
+          ],
+          "retrieved": [
+            "tender_offer_mechanics",
+            "market_structure_primer",
+            "exchange_listing_standards",
+            "share_buyback_mechanics",
+            "ipo_process_overview",
+            "antitrust_review_basics",
+            "securities_lending_basics",
+            "sox_compliance_intro",
+            "corporate_governance_intro",
+            "wonderland_capital_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 0.5,
+          "ndcg_at_10": 0.6309297535714575
+        },
+        {
+          "qid": "q16",
+          "query": "shortened post-trade clearing window for cash equities adopted in 2024",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "market_structure_primer"
+          ],
+          "retrieved": [
+            "market_structure_primer",
+            "wonderland_capital_overview",
+            "options_market_basics",
+            "securities_lending_basics",
+            "proxy_voting_overview",
+            "exchange_listing_standards",
+            "dividend_policy_intro",
+            "tender_offer_mechanics",
+            "antitrust_review_basics",
+            "etf_structure_primer"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q17",
+          "query": "regulation requiring identical consideration to every holder during a public bid for shares",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "tender_offer_mechanics"
+          ],
+          "retrieved": [
+            "tender_offer_mechanics",
+            "exchange_listing_standards",
+            "corporate_governance_intro",
+            "dividend_policy_intro",
+            "earnings_call_format",
+            "proxy_voting_overview",
+            "share_buyback_mechanics",
+            "market_structure_primer",
+            "ipo_process_overview",
+            "securities_lending_basics"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q18",
+          "query": "accrual standard governing when top-line is booked under a contract with a customer",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "accounting_standards_primer"
+          ],
+          "retrieved": [
+            "accounting_standards_primer",
+            "options_market_basics",
+            "corporate_governance_intro",
+            "earnings_call_format",
+            "proxy_voting_overview",
+            "tender_offer_mechanics",
+            "share_buyback_mechanics",
+            "antitrust_review_basics",
+            "sox_compliance_intro",
+            "exchange_listing_standards"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q19",
+          "query": "lessee right-of-use asset balance sheet recognition",
+          "style": "paraphrase",
+          "relevant": [
+            "accounting_standards_primer"
+          ],
+          "retrieved": [
+            "accounting_standards_primer",
+            "antitrust_review_basics",
+            "acme_q3_release",
+            "sox_compliance_intro",
+            "ipo_process_overview",
+            "exchange_listing_standards",
+            "dividend_policy_intro",
+            "proxy_voting_overview",
+            "etf_structure_primer",
+            "wonderland_capital_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q20",
+          "query": "board oversight body for the accountant relationship plus internal complaint mechanism mandated after 2002 reform",
+          "style": "multi-page-hard",
+          "relevant": [
+            "audit_committee_overview",
+            "sox_compliance_intro"
+          ],
+          "retrieved": [
+            "audit_committee_overview",
+            "sox_compliance_intro",
+            "acme_q3_release",
+            "proxy_voting_overview",
+            "earnings_call_format",
+            "accounting_standards_primer",
+            "corporate_governance_intro",
+            "antitrust_review_basics",
+            "exchange_listing_standards",
+            "fed_minutes_summary"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q21",
+          "query": "covering analysts question and answer session quarterly results",
+          "style": "paraphrase",
+          "relevant": [
+            "earnings_call_format"
+          ],
+          "retrieved": [
+            "earnings_call_format",
+            "sec_edgar_workflow",
+            "fed_minutes_summary",
+            "exchange_listing_standards",
+            "acme_q3_release",
+            "antitrust_review_basics",
+            "audit_committee_overview",
+            "corporate_governance_intro",
+            "dividend_policy_intro",
+            "wonderland_capital_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q22",
+          "query": "centrally cleared derivative contracts conferring the right to buy or sell shares at a referenced level",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "options_market_basics"
+          ],
+          "retrieved": [
+            "options_market_basics",
+            "share_buyback_mechanics",
+            "wonderland_capital_overview",
+            "tender_offer_mechanics",
+            "corporate_governance_intro",
+            "ipo_process_overview",
+            "dividend_policy_intro",
+            "securities_lending_basics",
+            "exchange_listing_standards",
+            "etf_structure_primer"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q23",
+          "query": "borrow shares to deliver against short sale settlement obligations",
+          "style": "paraphrase",
+          "relevant": [
+            "securities_lending_basics"
+          ],
+          "retrieved": [
+            "securities_lending_basics",
+            "share_buyback_mechanics",
+            "fed_minutes_summary",
+            "dividend_policy_intro",
+            "tender_offer_mechanics",
+            "market_structure_primer",
+            "options_market_basics",
+            "etf_structure_primer",
+            "antitrust_review_basics",
+            "ipo_process_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q24",
+          "query": "registered investment manager that publishes its brochure on the federal regulator's adviser database",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "wonderland_capital_overview"
+          ],
+          "retrieved": [
+            "wonderland_capital_overview",
+            "sec_edgar_workflow",
+            "sox_compliance_intro",
+            "earnings_call_format",
+            "audit_committee_overview",
+            "acme_q3_release",
+            "ipo_process_overview",
+            "etf_structure_primer",
+            "fed_minutes_summary",
+            "share_buyback_mechanics"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q25",
+          "query": "stockholder-initiated agenda items at the yearly governance gathering",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "proxy_voting_overview"
+          ],
+          "retrieved": [
+            "proxy_voting_overview",
+            "corporate_governance_intro",
+            "exchange_listing_standards",
+            "dividend_policy_intro",
+            "earnings_call_format",
+            "fed_minutes_summary",
+            "securities_lending_basics",
+            "sec_edgar_workflow",
+            "tender_offer_mechanics",
+            "audit_committee_overview"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        }
+      ]
+    }
+  }
+}

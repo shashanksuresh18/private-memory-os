@@ -1,0 +1,25 @@
+{"qid": "q01", "query": "federal clearance interval the largest buyouts must observe before consummation in the united states", "relevant": ["antitrust_review_basics"], "style": "paraphrase-hard"}
+{"qid": "q02", "query": "how long must a public bid for outstanding stock stay open", "relevant": ["tender_offer_mechanics"], "style": "paraphrase"}
+{"qid": "q03", "query": "regulatory shelter limiting market impact when a corporation purchases its own equity in ordinary trading", "relevant": ["share_buyback_mechanics"], "style": "paraphrase-hard"}
+{"qid": "q04", "query": "buying back stock through an investment bank intermediary", "relevant": ["share_buyback_mechanics"], "style": "paraphrase"}
+{"qid": "q05", "query": "cutoff that determines which holders receive an upcoming cash distribution", "relevant": ["dividend_policy_intro"], "style": "paraphrase-hard"}
+{"qid": "q06", "query": "when does the stock stop carrying the right to the upcoming payment", "relevant": ["dividend_policy_intro"], "style": "paraphrase"}
+{"qid": "q07", "query": "outside accountant report on the strength of internal financial controls required of larger registrants", "relevant": ["sox_compliance_intro"], "style": "paraphrase-hard"}
+{"qid": "q08", "query": "executive certification of periodic reports SOX", "relevant": ["sox_compliance_intro"], "style": "paraphrase"}
+{"qid": "q09", "query": "institutional marketing tour supporting pricing of a first-time share issuance", "relevant": ["ipo_process_overview"], "style": "paraphrase-hard"}
+{"qid": "q10", "query": "taking a private company public", "relevant": ["ipo_process_overview"], "style": "paraphrase"}
+{"qid": "q11", "query": "specialist firms that mint and redeem shares of a basket-tracking listed fund using physical constituent baskets", "relevant": ["etf_structure_primer"], "style": "paraphrase-hard"}
+{"qid": "q12", "query": "intraday traded fund tracks basket NAV", "relevant": ["etf_structure_primer"], "style": "paraphrase"}
+{"qid": "q13", "query": "summarized policy deliberations released weeks after the central bank rate decision", "relevant": ["fed_minutes_summary"], "style": "paraphrase-hard"}
+{"qid": "q14", "query": "central bank rate-setting committee press conference cadence", "relevant": ["fed_minutes_summary"], "style": "paraphrase"}
+{"qid": "q15", "query": "execution venue routing that must respect the best displayed bid or ask across competing markets", "relevant": ["market_structure_primer"], "style": "paraphrase-hard"}
+{"qid": "q16", "query": "shortened post-trade clearing window for cash equities adopted in 2024", "relevant": ["market_structure_primer"], "style": "paraphrase-hard"}
+{"qid": "q17", "query": "regulation requiring identical consideration to every holder during a public bid for shares", "relevant": ["tender_offer_mechanics"], "style": "paraphrase-hard"}
+{"qid": "q18", "query": "accrual standard governing when top-line is booked under a contract with a customer", "relevant": ["accounting_standards_primer"], "style": "paraphrase-hard"}
+{"qid": "q19", "query": "lessee right-of-use asset balance sheet recognition", "relevant": ["accounting_standards_primer"], "style": "paraphrase"}
+{"qid": "q20", "query": "board oversight body for the accountant relationship plus internal complaint mechanism mandated after 2002 reform", "relevant": ["audit_committee_overview", "sox_compliance_intro"], "style": "multi-page-hard"}
+{"qid": "q21", "query": "covering analysts question and answer session quarterly results", "relevant": ["earnings_call_format"], "style": "paraphrase"}
+{"qid": "q22", "query": "centrally cleared derivative contracts conferring the right to buy or sell shares at a referenced level", "relevant": ["options_market_basics"], "style": "paraphrase-hard"}
+{"qid": "q23", "query": "borrow shares to deliver against short sale settlement obligations", "relevant": ["securities_lending_basics"], "style": "paraphrase"}
+{"qid": "q24", "query": "registered investment manager that publishes its brochure on the federal regulator's adviser database", "relevant": ["wonderland_capital_overview"], "style": "paraphrase-hard"}
+{"qid": "q25", "query": "stockholder-initiated agenda items at the yearly governance gathering", "relevant": ["proxy_voting_overview"], "style": "paraphrase-hard"}

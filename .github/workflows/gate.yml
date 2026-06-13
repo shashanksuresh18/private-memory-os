@@ -1,0 +1,65 @@
+name: gating
+
+# Phase-2 debt B11 (per CLAUDE.md locked invariant):
+# "Gating tests are non-bypassable. A change to the engine, atoms table,
+#  graph extractor, reranker, or tier-routing seam ships only when all
+#  gating tests pass. `pytest -m gating` runs them all."
+#
+# This workflow runs ONLY the gating set on every push and pull request,
+# and blocks the merge when any of them fails.
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+permissions:
+  contents: read
+
+jobs:
+  gating:
+    name: pytest -m gating
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install minimal deps for the gating suite
+        run: |
+          python -m pip install --upgrade pip
+          # Engine + atoms + graph gating tests:
+          #   - tiktoken (chunker)
+          #   - httpx (Ollama embedder constructor; never invoked on the S3
+          #     gating path, defense-in-depth refuses non-loopback URLs)
+          # The bge cross-encoder + Ollama-backed Alice acceptance tests
+          # skip gracefully when the local model cache / Ollama daemon is
+          # absent (CI runners have neither). pytest.skip != fail.
+          python -m pip install pytest tiktoken httpx
+
+      - name: Confirm egress-fenced env (no API keys leak into CI)
+        run: |
+          for k in OPENAI_API_KEY ANTHROPIC_API_KEY VOYAGE_API_KEY ZEROENTROPY_API_KEY; do
+            if [ -n "${!k}" ]; then
+              echo "::error::cloud API key $k present in CI env — gating tests must run egress-fenced"
+              exit 1
+            fi
+          done
+          echo "ok: no cloud API keys in env"
+
+      - name: Run the gating suite (pytest -m gating)
+        run: |
+          python -m pytest -m gating --strict-markers --tb=short -ra -q
+
+      - name: Refuse to merge if any gating test failed
+        if: failure()
+        run: |
+          echo "::error::Gating tests failed. Per CLAUDE.md locked invariant, this branch cannot ship."
+          exit 1

@@ -1,0 +1,31 @@
+# Real-vault qrels. Slugs are page_slug values from retrieval.db (folder-prefixed).
+# Tier gate in search.py is EXACT match, so each query must be run at its own tier.
+# 'relevant' = loader field (eval.py load_qrels). 'expected_slugs'/'tier' mirror task spec.
+# NOTE: task's 4 northstar S1 questions dropped — no northstar doc exists in vault/DB.
+#       substituted 2 grounded Apple S1 questions to keep 4 S1 entries.
+{"qid": "q01", "query": "What was Apple iPhone segment revenue in 2023?", "tier": "S1", "relevant": ["inbox/aapl_annual_2023"], "expected_slugs": ["inbox/aapl_annual_2023"], "style": "factoid"}
+{"qid": "q02", "query": "What is Apple Q1 2024 revenue guidance?", "tier": "S1", "relevant": ["inbox/aapl_annual_2023"], "expected_slugs": ["inbox/aapl_annual_2023"], "style": "factoid"}
+{"qid": "q03", "query": "What was Apple total revenue in fiscal 2023?", "tier": "S1", "relevant": ["inbox/aapl_annual_2023"], "expected_slugs": ["inbox/aapl_annual_2023"], "style": "factoid"}
+{"qid": "q04", "query": "What is Apple gross margin guidance?", "tier": "S1", "relevant": ["inbox/aapl_annual_2023"], "expected_slugs": ["inbox/aapl_annual_2023"], "style": "factoid"}
+{"qid": "q05", "query": "What is the current net leverage ratio?", "tier": "S2", "relevant": ["meetings/2026-05-12-vertex-credit-call"], "expected_slugs": ["meetings/2026-05-12-vertex-credit-call"], "style": "factoid"}
+{"qid": "q06", "query": "What happens if renewal bookings slip 8 percent?", "tier": "S2", "relevant": ["meetings/2026-05-12-vertex-credit-call"], "expected_slugs": ["meetings/2026-05-12-vertex-credit-call"], "style": "factoid"}
+{"qid": "q07", "query": "When is the next lender call scheduled?", "tier": "S2", "relevant": ["meetings/2026-05-12-vertex-credit-call"], "expected_slugs": ["meetings/2026-05-12-vertex-credit-call"], "style": "factoid"}
+{"qid": "q08", "query": "What is the enterprise value of Project Kingfisher?", "tier": "S3", "relevant": ["board_meeting_2026_05_28"], "expected_slugs": ["board_meeting_2026_05_28"], "style": "factoid"}
+{"qid": "q09", "query": "What is the EPS guidance revision?", "tier": "S3", "relevant": ["board_meeting_2026_05_28"], "expected_slugs": ["board_meeting_2026_05_28"], "style": "factoid"}
+{"qid": "q10", "query": "What is the headcount reduction plan?", "tier": "S3", "relevant": ["board_meeting_2026_05_28"], "expected_slugs": ["board_meeting_2026_05_28"], "style": "factoid"}
+# q11-q15: hard paraphrases — no lexical overlap with source. Semantic-search probe.
+{"qid": "q11", "query": "takeover price Meridian deal", "tier": "S3", "relevant": ["board_meeting_2026_05_28"], "expected_slugs": ["board_meeting_2026_05_28"], "style": "paraphrase-hard"}
+{"qid": "q12", "query": "credit agreement headroom pressure", "tier": "S2", "relevant": ["meetings/2026-05-12-vertex-credit-call"], "expected_slugs": ["meetings/2026-05-12-vertex-credit-call"], "style": "paraphrase-hard"}
+{"qid": "q13", "query": "Cook remarks on handset performance", "tier": "S1", "relevant": ["inbox/aapl_annual_2023"], "expected_slugs": ["inbox/aapl_annual_2023"], "style": "paraphrase-hard"}
+{"qid": "q14", "query": "debt capacity revolving facility", "tier": "S3", "relevant": ["board_meeting_2026_05_28"], "expected_slugs": ["board_meeting_2026_05_28"], "style": "paraphrase-hard"}
+{"qid": "q15", "query": "earnings per share upward revision", "tier": "S3", "relevant": ["board_meeting_2026_05_28"], "expected_slugs": ["board_meeting_2026_05_28"], "style": "paraphrase-hard"}
+# q16-q23: EDGAR-grounded S1 questions (real 10-K filings fetched 2026-06-02).
+
+{"qid": "q16", "query": "Apple net sales total revenue fiscal 2025", "tier": "S1", "relevant": ["inbox/aapl_10k_2025-10-31"], "expected_slugs": ["inbox/aapl_10k_2025-10-31"], "style": "factoid"}
+{"qid": "q17", "query": "iPhone net sales fiscal 2025", "tier": "S1", "relevant": ["inbox/aapl_10k_2025-10-31"], "expected_slugs": ["inbox/aapl_10k_2025-10-31"], "style": "factoid"}
+{"qid": "q18", "query": "Microsoft Azure cloud revenue", "tier": "S1", "relevant": ["inbox/msft_10k_2025-07-30"], "expected_slugs": ["inbox/msft_10k_2025-07-30"], "style": "factoid"}
+{"qid": "q19", "query": "Microsoft diluted EPS fiscal 2025", "tier": "S1", "relevant": ["inbox/aapl_10k_2025-10-31"], "expected_slugs": ["inbox/aapl_10k_2025-10-31"], "style": "factoid"}
+{"qid": "q20", "query": "Alphabet Google advertising revenue", "tier": "S1", "relevant": ["inbox/googl_10k_2026-02-05"], "expected_slugs": ["inbox/googl_10k_2026-02-05"], "style": "factoid"}
+{"qid": "q21", "query": "Apple gross margin percentage", "tier": "S1", "relevant": ["inbox/aapl_10k_2025-10-31"], "expected_slugs": ["inbox/aapl_10k_2025-10-31"], "style": "factoid"}
+{"qid": "q22", "query": "Apple shares outstanding common stock", "tier": "S1", "relevant": ["inbox/googl_10k_2026-02-05"], "expected_slugs": ["inbox/googl_10k_2026-02-05"], "style": "factoid"}
+{"qid": "q23", "query": "Microsoft total revenue fiscal 2025", "tier": "S1", "relevant": ["inbox/msft_10k_2025-07-30"], "expected_slugs": ["inbox/msft_10k_2025-07-30"], "style": "factoid"}

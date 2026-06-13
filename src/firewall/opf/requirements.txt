@@ -1,0 +1,5 @@
+fastapi>=0.115
+uvicorn[standard]>=0.32
+pydantic>=2.7
+# opf is installed in editable mode from ../../../privacy-filter
+# Run from project root: pip install -e privacy-filter

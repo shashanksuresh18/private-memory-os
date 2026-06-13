@@ -1,0 +1,6 @@
+# Restricted tickers under MNPI position or insider knowledge -- any whole-word hit forces S3.
+# One ticker per line. Whole-word matching (case-insensitive).
+
+# Examples (REPLACE with your restricted list):
+# ACME
+# XYZ

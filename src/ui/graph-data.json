@@ -1,0 +1,116 @@
+{
+  "nodes": [
+    {
+      "id": "C:\\sovereign-citadel\\vault\\companies\\acme-data.md",
+      "label": "Acme Data",
+      "tier": "S2",
+      "group": "companies",
+      "source_file": "C:\\sovereign-citadel\\vault\\companies\\acme-data.md"
+    },
+    {
+      "id": "C:\\sovereign-citadel\\vault\\companies\\wonderland-capital.md",
+      "label": "Wonderland Capital",
+      "tier": "S2",
+      "group": "companies",
+      "source_file": "C:\\sovereign-citadel\\vault\\companies\\wonderland-capital.md"
+    },
+    {
+      "id": "C:\\sovereign-citadel\\vault\\meetings\\2026-05-28-alice-intro-call.md",
+      "label": "2026 05 28 Alice Intro Call",
+      "tier": "S2",
+      "group": "meetings",
+      "source_file": "C:\\sovereign-citadel\\vault\\meetings\\2026-05-28-alice-intro-call.md"
+    },
+    {
+      "id": "C:\\sovereign-citadel\\vault\\memos\\2026-05-28-sovereign-citadel-architecture.md",
+      "label": "2026 05 28 Sovereign Citadel Architecture",
+      "tier": "S3",
+      "group": "memos",
+      "source_file": "C:\\sovereign-citadel\\vault\\memos\\2026-05-28-sovereign-citadel-architecture.md"
+    },
+    {
+      "id": "C:\\sovereign-citadel\\vault\\people\\alice-liddell.md",
+      "label": "Alice Liddell",
+      "tier": "S2",
+      "group": "people",
+      "source_file": "C:\\sovereign-citadel\\vault\\people\\alice-liddell.md"
+    },
+    {
+      "id": "C:\\sovereign-citadel\\vault\\people\\bob-marchand.md",
+      "label": "Bob Marchand",
+      "tier": "S2",
+      "group": "people",
+      "source_file": "C:\\sovereign-citadel\\vault\\people\\bob-marchand.md"
+    },
+    {
+      "id": "C:\\sovereign-citadel\\vault\\people\\carol-rivera.md",
+      "label": "Carol Rivera",
+      "tier": "S2",
+      "group": "people",
+      "source_file": "C:\\sovereign-citadel\\vault\\people\\carol-rivera.md"
+    }
+  ],
+  "links": [
+    {
+      "source": "C:\\sovereign-citadel\\vault\\companies\\acme-data.md",
+      "target": "C:\\sovereign-citadel\\vault\\companies\\wonderland-capital.md",
+      "relation": "invested_in"
+    },
+    {
+      "source": "C:\\sovereign-citadel\\vault\\companies\\acme-data.md",
+      "target": "C:\\sovereign-citadel\\vault\\companies\\wonderland-capital.md",
+      "relation": "works_at"
+    },
+    {
+      "source": "C:\\sovereign-citadel\\vault\\meetings\\2026-05-28-alice-intro-call.md",
+      "target": "C:\\sovereign-citadel\\vault\\companies\\wonderland-capital.md",
+      "relation": "works_at"
+    },
+    {
+      "source": "C:\\sovereign-citadel\\vault\\meetings\\2026-05-28-alice-intro-call.md",
+      "target": "C:\\sovereign-citadel\\vault\\people\\alice-liddell.md",
+      "relation": "attended"
+    },
+    {
+      "source": "C:\\sovereign-citadel\\vault\\memos\\2026-05-28-sovereign-citadel-architecture.md",
+      "target": "C:\\sovereign-citadel\\vault\\companies\\wonderland-capital.md",
+      "relation": "works_at"
+    },
+    {
+      "source": "C:\\sovereign-citadel\\vault\\people\\alice-liddell.md",
+      "target": "C:\\sovereign-citadel\\vault\\companies\\wonderland-capital.md",
+      "relation": "works_at"
+    },
+    {
+      "source": "C:\\sovereign-citadel\\vault\\people\\bob-marchand.md",
+      "target": "C:\\sovereign-citadel\\vault\\companies\\acme-data.md",
+      "relation": "founded"
+    },
+    {
+      "source": "C:\\sovereign-citadel\\vault\\people\\bob-marchand.md",
+      "target": "C:\\sovereign-citadel\\vault\\companies\\acme-data.md",
+      "relation": "works_at"
+    },
+    {
+      "source": "C:\\sovereign-citadel\\vault\\people\\bob-marchand.md",
+      "target": "C:\\sovereign-citadel\\vault\\companies\\wonderland-capital.md",
+      "relation": "invested_in"
+    },
+    {
+      "source": "C:\\sovereign-citadel\\vault\\people\\bob-marchand.md",
+      "target": "C:\\sovereign-citadel\\vault\\companies\\wonderland-capital.md",
+      "relation": "works_at"
+    },
+    {
+      "source": "C:\\sovereign-citadel\\vault\\people\\carol-rivera.md",
+      "target": "C:\\sovereign-citadel\\vault\\companies\\acme-data.md",
+      "relation": "invested_in"
+    },
+    {
+      "source": "C:\\sovereign-citadel\\vault\\people\\carol-rivera.md",
+      "target": "C:\\sovereign-citadel\\vault\\companies\\wonderland-capital.md",
+      "relation": "works_at"
+    }
+  ],
+  "built_from": "src\\memory\\sqlite\\graph.db"
+}

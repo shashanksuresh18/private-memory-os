@@ -1,0 +1,100 @@
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Build output
+dist/
+build/
+out/
+src/ui/dist/
+
+# Local Claude Code config (personal overrides)
+CLAUDE.local.md
+.claude/settings.local.json
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+
+# Python
+*.pyc
+__pycache__/
+.pytest_cache/
+.coverage
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+npm-debug.log*
+
+# Coverage
+coverage/
+
+# Temporary
+tmp/
+temp/
+
+# Stray dev-capture artifacts (error dumps, temp test output) — never released
+*.err
+err*.txt
+junit_tmp.xml
+.pytest_junit.xml
+
+# ---------------------------------------------------------------------------
+# Sovereign Citadel — private data MUST NEVER leave the machine.
+# Retrieval index (canonical lives at repo-root/retrieval.db) + any sqlite DB.
+# ---------------------------------------------------------------------------
+retrieval.db
+retrieval.db-*
+*.db
+*.db-wal
+*.db-shm
+
+# Egress audit log, vault snapshots, knowledge-graph output — all private.
+audit/
+backups/
+graphify-out/
+
+# Model weights + secret tokens
+src/models/ollama/*.gguf
+src/firewall/ner-onnx/*.onnx
+src/firewall/embeddings/*.bin
+src/firewall/opf/.token
+src/routing/.token
+*.gbrain-lock
+*.snapshot
+
+# ---------------------------------------------------------------------------
+# Vault: the project keeps its brain in vault/, which is its OWN embedded git
+# repo (vault/.git). An outer repo cannot track files inside an embedded repo —
+# git would only record a useless gitlink (a bare SHA pointing at the private
+# vault repo) and the .gitkeep placeholders inside it are unreachable. So the
+# whole tree is ignored here. NO vault content — real OR placeholder — is ever
+# committed to the client repo. The client's empty folders are created at
+# runtime: launch.bat / setup.bat make vault/raw/{s1,s2,s3}; the /ingest
+# endpoint makes vault/inbox. Fail-closed: this guarantees zero MNPI leak.
+# ---------------------------------------------------------------------------
+vault/
+
+# Read-only clones used for audit only (not part of the runtime tree)
+repos-audit/
+
+# Forks placed at project root by user — track via SHAS pin file, not source
+ClawXRouter/
+privacy-filter/
+
+# Junk LICENSE written by earlier failed curl
+LICENSE

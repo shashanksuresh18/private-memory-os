@@ -1,0 +1,8 @@
+# Active deal codenames -- any hit forces S3.
+# One term per line. Lines starting with # ignored. Case-insensitive matching.
+# Edit at runtime; call reload_denylist() to invalidate the cache.
+
+# Examples (REPLACE with real codenames before production use):
+# project orion
+# project blackthorn
+# atlas acquisition

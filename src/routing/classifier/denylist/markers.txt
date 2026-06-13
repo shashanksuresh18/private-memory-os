@@ -1,0 +1,14 @@
+# Explicit MNPI markers -- any substring hit forces S3.
+# One term per line. Case-insensitive substring matching.
+
+mnpi
+material non-public
+non-public information
+draft memo
+investment committee notes
+under nda
+confidential -- internal
+do not distribute
+embargoed
+pre-release earnings
+insider report

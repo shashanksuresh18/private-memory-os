@@ -1,0 +1,53 @@
+/* Aleph token and typography foundation for the dashboard. */
+
+@font-face {
+  font-family: "Geist";
+  src: url("./fonts/Geist-Variable.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("./fonts/GeistMono-Variable.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "JetBrains Mono", "SFMono-Regular", Menlo, monospace;
+  --font-display: "Geist", ui-sans-serif, system-ui, sans-serif;
+
+  --indigo-400: #818cf8;
+  --indigo-500: #6366f1;
+  --indigo-600: #4f46e5;
+  --emerald-400: #34d399;
+  --emerald-500: #10b981;
+  --emerald-600: #059669;
+  --amber-400: #fbbf24;
+  --amber-500: #f59e0b;
+  --amber-600: #d97706;
+  --rose-400: #fb7185;
+  --rose-500: #f43f5e;
+  --rose-600: #e11d48;
+  --sky-400: #38bdf8;
+  --sky-500: #0ea5e9;
+  --sky-600: #0284c7;
+  --violet-400: #a78bfa;
+  --violet-500: #8b5cf6;
+
+  --tier-s1: var(--sky-500);
+  --tier-s1-soft: color-mix(in srgb, var(--tier-s1) 12%, transparent);
+  --tier-s2: var(--amber-500);
+  --tier-s2-soft: color-mix(in srgb, var(--tier-s2) 14%, transparent);
+  --tier-s3: var(--rose-500);
+  --tier-s3-soft: color-mix(in srgb, var(--tier-s3) 12%, transparent);
+
+  --evidence-primary: var(--emerald-500);
+  --evidence-generated: var(--violet-500);
+  --evidence-weak: var(--amber-500);
+  --evidence-missing: var(--rose-500);
+}

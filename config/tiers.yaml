@@ -1,0 +1,89 @@
+# Sovereign Citadel — Tri-Tier Data Classification Policy
+# Read by ClawXRouter. Fail-closed: unknown -> S3.
+
+version: 1
+default_tier: S3   # CRITICAL — never change without security review
+
+tiers:
+
+  S3:
+    name: confidential
+    description: MNPI, private memos, CRM notes, deal flow, position sizes
+    route: extractive_local
+    cloud_allowed: false
+    model_allowed: false           # only local Qwen2.5-32B-Q4_K_M permitted; extractive route by default
+    prompt_cache: false            # never cache S3 text in any model
+    audit_required: true
+    egress_check: hard_block
+    fallback_on_oom: extractive_local   # NEVER fall back to cloud
+    detectors:
+      - rule:keywords:
+          - mnpi
+          - confidential
+          - non-public
+          - insider
+          - draft memo
+      - rule:regex:
+          - "(?i)\\b(deal|target)\\s+code(name)?\\s*:"
+          - "(?i)\\bposition\\s+size\\b"
+      - rule:vault_path: "vault/(memos|crm|people|companies)/.*"
+      - local_llm:semantic_sensitivity     # MiniCPM/Phi-mini judgement
+      - rag_taint: any_S3_evidence_taints_query
+
+  S2:
+    name: sensitive
+    description: PII-containing material, identifiable data, internal notes
+    route: scrub_then_cloud
+    cloud_allowed: true
+    model_allowed: ["claude-sonnet-4-5", "claude-3-5-sonnet"]
+    prompt_cache: false
+    audit_required: true
+    egress_check: scrub_required
+    firewall:
+      # openai/privacy-filter (Apache 2.0, ~1.5B params, 128k context, 8 PII categories)
+      opf:
+        checkpoint_env: OPF_CHECKPOINT             # default ~/.opf/privacy_filter
+        cli: "opf -f {input_path}"                 # also: cat ... | opf
+        categories: [secret, private_person, account_number, location, date_of_birth, email, phone, identifier]
+        device: cpu                                # set cuda when GPU available
+        operating_point: high_recall               # precision/recall tradeoff preset
+      denylist:  src/firewall/denylist/finance.txt
+      embedding_gate:
+        s3_corpus: src/firewall/embeddings/s3-index.bin
+        cosine_threshold: 0.78         # similarity to S3 -> escalate to S3
+    first_egress_requires_human_approval: true
+    detectors:
+      - rule:keywords: [email, phone, ssn, account, address]
+      - local_llm:pii_present
+
+  S1:
+    name: public
+    description: SEC filings, market data, published research
+    route: cloud_or_council
+    cloud_allowed: true
+    model_allowed: ["claude-sonnet-4-5", "claude-3-5-sonnet", "gpt-4.1", "gemini-3-pro"]
+    prompt_cache: true
+    audit_required: true                # still logged for cost/quota
+    egress_check: pass_through
+    massgen_enabled: true
+    detectors:
+      - rule:vault_path: "vault/(public|inbox/raw)/.*"
+      - rule:source_url_in: [sec.gov, edgar, bloomberg, reuters]
+
+# Mixed-evidence policy: any S3 source in the evidence bundle taints the whole query.
+mixed_evidence_rule:
+  any_S3_source: S3
+  any_S2_no_S3:  S2
+  all_S1:        S1
+
+# Output classification (the response inherits the highest tier of any source it used).
+output_classification:
+  rule: max_tier_of_sources_consulted
+
+# Routing audit log — every decision is recorded BEFORE the egress call.
+audit:
+  path: audit/routing.log
+  format: jsonl
+  fields: [event_id, ts, route, tier, source_chunk_ids, hashes, decision_flags, model, allowed]
+  hash_chain: true
+  fsync: always

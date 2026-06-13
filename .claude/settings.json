@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Read files in the project directory",
+      "Write files in src/ and tests/",
+      "Run npm and node commands",
+      "Run git commands"
+    ],
+    "deny": [
+      "Access files outside the project directory",
+      "Run destructive system commands",
+      "Access network without explicit approval"
+    ]
+  },
+  "models": {
+    "default": "claude-sonnet-4-20250514",
+    "planning": "claude-sonnet-4-20250514",
+    "review": "claude-sonnet-4-20250514"
+  },
+  "tools": {
+    "enabled": ["read_file", "write_file", "run_command", "search", "browser"],
+    "disabled": []
+  },
+  "hooks": {},
+  "preferences": {
+    "autoApprove": false,
+    "verboseOutput": false,
+    "maxFileSize": "1MB"
+  }
+}

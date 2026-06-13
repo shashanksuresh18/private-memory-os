@@ -1,0 +1,59 @@
+# Sovereign Citadel — Resource + Cost Budgets
+# Enforced by ToolPiper (RAM) + ClawXRouter (tokens/cost).
+
+version: 1
+
+# ---- Hardware budget (32GB Mac, unified memory) ----
+# Sum cannot exceed 30GB resident at any point; 2GB safety headroom.
+ram:
+  total_gb: 32
+  safety_headroom_gb: 2
+  # Host: Windows 11 (mac shim added later).
+  # Pre-load reservations (process must declare; mmap blocked above this)
+  reservations:
+    windows_baseline_gb:      6     # OS + dwm.exe + Defender + system services
+    obsidian_gb:              1.5
+    claude_code_gb:           1.5
+    classifier_llm_gb:        5     # Phi-mini OR MiniCPM-4.1 (pick one)
+    main_reasoning_llm_gb:    20    # Qwen2.5-32B Q4_K_M peak with KV cache (Ollama on Windows native)
+    embedding_engine_gb:      1     # nomic-embed-text
+    sqlite_indexer_gb:        1
+    background_agents_gb:     2     # EdgeClaw + Kairos + Sandbox combined
+  # Mutual exclusion: classifier + main reasoning cannot be resident together by default.
+  # Hot-swap cost: 10-25s cold-load. Router schedules accordingly.
+  mutex_groups:
+    - [classifier_llm_gb, main_reasoning_llm_gb]   # serial only
+  oom_policy:
+    pre_check_api: psutil.Process.memory_info      # Windows via GetProcessMemoryInfo
+    pre_check_api_mac: proc_pid_rusage             # used after mac migration
+    fail_action: extractive_local                  # never cloud fallback
+    kill_order: [background_agents_gb, embedding_engine_gb]   # protect router + LLM
+    vram_note: "Ollama on Windows: also track CUDA/Metal-equivalent VRAM separately; psutil does NOT see GPU memory."
+
+# ---- Token + API cost budget ----
+tokens:
+  daily_cap_usd: 25
+  per_query_cap_usd: 0.50
+  massgen_per_council_cap_usd: 5     # multi-agent S1 debate
+  cache_strategy:
+    S1: prompt_cache_on
+    S2: prompt_cache_off              # scrubbed skeleton MUST NOT cache
+    S3: never                          # local only
+
+# ---- Latency budget (Sovereign Citadel SLOs) ----
+latency:
+  classifier_p95_ms: 1500            # local LLM detect ~1-2s
+  extractive_local_p95_ms: 800
+  s2_egress_total_p95_ms: 4000
+  s1_council_p95_ms: 30000
+
+# ---- Numeric correctness gates ----
+numeric:
+  llm_arithmetic: forbidden          # never let LLM compute final number
+  required_route: symbolic_python
+  sandbox: src/agents/sandbox
+  output_sanity_bounds:
+    ratio_min: 0
+    ratio_max: 1e6
+    percent_min: -100
+    percent_max: 10000

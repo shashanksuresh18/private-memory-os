@@ -1,0 +1,99 @@
+# Sovereign Citadel — 24/7 Background Schedule (ClawXKairos)
+# Host: Windows 11. Implemented via Task Scheduler. Mac variants kept for future port.
+
+version: 1
+
+host: windows
+
+# Wake guard — Windows uses Task Scheduler WAKETORUN flag; mac kept for port.
+sleep_policy:
+  windows:
+    register_cmd: 'schtasks /Create /TN "SovereignCitadel\\{id}" /SC ONSTART /WAKETORUN /RL HIGHEST'
+    powercfg:    'powercfg /change standby-timeout-ac 0'
+  mac:
+    register_cmd: 'launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/citadel.{id}.plist'
+    caffeinate:  'caffeinate -dimsu'
+
+jobs:
+
+  # ---- Ingestion ----
+  - id: openhuman_inbox_sweep
+    cron: "*/15 * * * *"               # every 15 min
+    cmd:  "openhuman fetch --target vault/inbox --tier-default S2"
+    tier: S2
+    timeout_sec: 300
+
+  - id: retrieval_incremental_ingest
+    cron: "*/10 * * * *"               # every 10 min
+    cmd:  "python scripts/ingest_new.py --reindex"
+    tier: S3                           # touches S3 vault content -- local only
+    timeout_sec: 300
+    notes: >
+      Auto-ingest new vault pages into retrieval.db. Incremental/append-only:
+      embeds only NEW page_slugs via local Ollama (nomic-embed-text), skips
+      existing, never egresses. EDITS to an already-indexed page are NOT
+      re-embedded by this job (diff is by slug, not content hash) -- a full
+      reset rebuild is still required to re-index modified pages.
+
+  - id: graphify_incremental
+    cron: "0 */2 * * *"                # every 2 hours
+    cmd:  "graphify --update ."
+    tier: S3
+    only_if_changed: true              # skip if manifest unchanged
+    timeout_sec: 600
+
+  - id: retrieval_full_rebuild
+    cron: "30 3 * * *"                 # 03:30 daily
+    cmd:  "python scripts/ingest_new.py --rebuild"
+    tier: S3                           # full re-embed of all vault content -- local only
+    timeout_sec: 1800
+    notes: >
+      Nightly reset=True full rebuild of retrieval.db. Re-embeds EVERY vault
+      page via local Ollama, so EDITS to already-indexed pages (which the 10-min
+      incremental job skips) get re-indexed here. Zero cloud. Future: replace
+      with content-hash diff in the incremental job (tech-debt B12) so edits are
+      caught within 10 min instead of waiting for the nightly pass.
+
+  # ---- Compaction & memory hygiene ----
+  - id: tokenjuice_compact
+    cron: "0 3 * * *"                  # 03:00 daily
+    cmd:  "openhuman compact --keep-lossless"
+    tier: S3
+    notes: "lossy compression -- never run on memos below gbrain compiled-truth line"
+
+  - id: vault_snapshot
+    cron: "0 4 * * *"                  # 04:00 daily
+    cmd:  "robocopy vault backups\\vault-%date:~10,4%%date:~4,2%%date:~7,2% /MIR /R:1 /W:1 /NFL /NDL"
+    tier: S3
+    notes: "Windows robocopy /MIR. After mac port: rsync -a --delete vault/ backups/vault-$(date +%Y%m%d)/"
+
+  # ---- Audit + integrity ----
+  - id: audit_hash_chain_verify
+    cron: "0 * * * *"                  # hourly
+    cmd:  "src/routing/audit-log/verify_chain.py audit/routing.log"
+    tier: S3
+    on_failure: page_user              # tamper signal
+
+  - id: ollama_sha_pin_check
+    cron: "0 5 * * 0"                  # weekly Sunday 05:00
+    cmd:  "scripts/verify_model_shas.sh src/models/ollama/SHAS.txt"
+    tier: S3
+
+  # ---- Research loops ----
+  - id: catalysts_calendar_refresh
+    cron: "0 7 * * 1-5"                # weekdays 07:00
+    cmd:  "ecc skill catalysts --update"
+    tier: S1
+
+  - id: massgen_premarket_brief
+    cron: "30 7 * * 1-5"               # weekdays 07:30
+    cmd:  "massgen run premarket-council --budget $5"
+    tier: S1
+    cost_cap_usd: 5
+
+  # ---- Health ----
+  - id: ram_pressure_probe
+    cron: "*/5 * * * *"
+    cmd:  "scripts/ram_probe.sh"
+    tier: S3
+    on_failure: kill background_agents

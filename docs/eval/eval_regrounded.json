@@ -1,0 +1,1852 @@
+{
+  "schema_version": 1,
+  "qrels_path": "tests\\eval\\qrels_real.jsonl",
+  "vault_path": "vault",
+  "db_path": "retrieval.db",
+  "embedder": "ollama",
+  "reranker": "bge",
+  "tier": "S1",
+  "k": 10,
+  "k_in": 50,
+  "n_queries": 23,
+  "variants": {
+    "bm25_only": {
+      "macro": {
+        "recall_at_10": 1.0,
+        "mrr_at_10": 0.903623188405797,
+        "ndcg_at_10": 0.9268491028394754
+      },
+      "per_query": [
+        {
+          "qid": "q01",
+          "query": "What was Apple iPhone segment revenue in 2023?",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_annual_2023"
+          ],
+          "retrieved": [
+            "inbox/aapl_annual_2023",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q02",
+          "query": "What is Apple Q1 2024 revenue guidance?",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_annual_2023"
+          ],
+          "retrieved": [
+            "inbox/aapl_annual_2023",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q03",
+          "query": "What was Apple total revenue in fiscal 2023?",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_annual_2023"
+          ],
+          "retrieved": [
+            "inbox/aapl_annual_2023",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q04",
+          "query": "What is Apple gross margin guidance?",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_annual_2023"
+          ],
+          "retrieved": [
+            "inbox/aapl_annual_2023",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/msft_10k_2025-07-30",
+            "concepts/series-b-readiness",
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q05",
+          "query": "What is the current net leverage ratio?",
+          "tier": "S2",
+          "style": "factoid",
+          "relevant": [
+            "meetings/2026-05-12-vertex-credit-call"
+          ],
+          "retrieved": [
+            "meetings/2026-05-12-vertex-credit-call",
+            "meetings/2026-05-28-alice-intro-call",
+            "people/bob-marchand",
+            "people/dana-kim",
+            "memos/2026-06-01-vertex-credit-underwriting",
+            "people/carol-rivera",
+            "companies/acme-data",
+            "meetings/2026-05-30-acme-product-review",
+            "people/alice-liddell"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q06",
+          "query": "What happens if renewal bookings slip 8 percent?",
+          "tier": "S2",
+          "style": "factoid",
+          "relevant": [
+            "meetings/2026-05-12-vertex-credit-call"
+          ],
+          "retrieved": [
+            "meetings/2026-05-12-vertex-credit-call",
+            "companies/acme-data",
+            "meetings/2026-05-28-alice-intro-call"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q07",
+          "query": "When is the next lender call scheduled?",
+          "tier": "S2",
+          "style": "factoid",
+          "relevant": [
+            "meetings/2026-05-12-vertex-credit-call"
+          ],
+          "retrieved": [
+            "meetings/2026-05-12-vertex-credit-call",
+            "meetings/2026-05-28-alice-intro-call",
+            "meetings/2026-05-30-acme-product-review",
+            "companies/acme-data",
+            "people/alice-liddell",
+            "people/carol-rivera"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q08",
+          "query": "What is the enterprise value of Project Kingfisher?",
+          "tier": "S3",
+          "style": "factoid",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "board_meeting_2026_05_28",
+            "companies/meridian-technologies",
+            "meetings/2026-06-01-meridian-diligence-sync",
+            "people/frank-orr",
+            "memos/2026-05-28-sovereign-citadel-architecture"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q09",
+          "query": "What is the EPS guidance revision?",
+          "tier": "S3",
+          "style": "factoid",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "board_meeting_2026_05_28",
+            "memos/2026-05-28-sovereign-citadel-architecture",
+            "companies/meridian-technologies",
+            "people/frank-orr",
+            "meetings/2026-06-01-meridian-diligence-sync"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q10",
+          "query": "What is the headcount reduction plan?",
+          "tier": "S3",
+          "style": "factoid",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "board_meeting_2026_05_28",
+            "memos/2026-05-28-sovereign-citadel-architecture",
+            "companies/meridian-technologies",
+            "people/frank-orr",
+            "meetings/2026-06-01-meridian-diligence-sync"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q11",
+          "query": "takeover price Meridian deal",
+          "tier": "S3",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "meetings/2026-06-01-meridian-diligence-sync",
+            "companies/meridian-technologies",
+            "people/frank-orr",
+            "board_meeting_2026_05_28"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 0.25,
+          "ndcg_at_10": 0.43067655807339306
+        },
+        {
+          "qid": "q12",
+          "query": "credit agreement headroom pressure",
+          "tier": "S2",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "meetings/2026-05-12-vertex-credit-call"
+          ],
+          "retrieved": [
+            "meetings/2026-05-12-vertex-credit-call",
+            "companies/vertex-credit",
+            "memos/2026-06-01-vertex-credit-underwriting",
+            "people/dana-kim"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q13",
+          "query": "Cook remarks on handset performance",
+          "tier": "S1",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "inbox/aapl_annual_2023"
+          ],
+          "retrieved": [
+            "inbox/aapl_annual_2023",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/googl_10k_2026-02-05",
+            "inbox/msft_10k_2025-07-30"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q14",
+          "query": "debt capacity revolving facility",
+          "tier": "S3",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "board_meeting_2026_05_28"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q15",
+          "query": "earnings per share upward revision",
+          "tier": "S3",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "board_meeting_2026_05_28",
+            "memos/2026-05-28-sovereign-citadel-architecture"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q16",
+          "query": "Apple net sales total revenue fiscal 2025",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_10k_2025-10-31"
+          ],
+          "retrieved": [
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_annual_2023",
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q17",
+          "query": "iPhone net sales fiscal 2025",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_10k_2025-10-31"
+          ],
+          "retrieved": [
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/aapl_annual_2023",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q18",
+          "query": "Microsoft Azure cloud revenue",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/msft_10k_2025-07-30"
+          ],
+          "retrieved": [
+            "inbox/msft_10k_2025-07-30",
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q19",
+          "query": "Microsoft diluted EPS fiscal 2025",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_10k_2025-10-31"
+          ],
+          "retrieved": [
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_facts_2026-06-02",
+            "inbox/googl_facts_2026-06-02",
+            "inbox/msft_facts_2026-06-02",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 0.2,
+          "ndcg_at_10": 0.38685280723454163
+        },
+        {
+          "qid": "q20",
+          "query": "Alphabet Google advertising revenue",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "retrieved": [
+            "inbox/googl_10k_2026-02-05",
+            "inbox/msft_10k_2025-07-30"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q21",
+          "query": "Apple gross margin percentage",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_10k_2025-10-31"
+          ],
+          "retrieved": [
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_annual_2023",
+            "concepts/series-b-readiness",
+            "inbox/googl_10k_2026-02-05",
+            "concepts/data-infra-kpi-glossary"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q22",
+          "query": "Apple shares outstanding common stock",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "retrieved": [
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 0.3333333333333333,
+          "ndcg_at_10": 0.5
+        },
+        {
+          "qid": "q23",
+          "query": "Microsoft total revenue fiscal 2025",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/msft_10k_2025-07-30"
+          ],
+          "retrieved": [
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_annual_2023",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        }
+      ]
+    },
+    "vec_only": {
+      "macro": {
+        "recall_at_10": 1.0,
+        "mrr_at_10": 0.8250517598343684,
+        "ndcg_at_10": 0.8676759111575233
+      },
+      "per_query": [
+        {
+          "qid": "q01",
+          "query": "What was Apple iPhone segment revenue in 2023?",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_annual_2023"
+          ],
+          "retrieved": [
+            "inbox/aapl_annual_2023",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/googl_10k_2026-02-05",
+            "inbox/msft_facts_2026-06-02",
+            "inbox/googl_facts_2026-06-02",
+            "inbox/aapl_facts_2026-06-02"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q02",
+          "query": "What is Apple Q1 2024 revenue guidance?",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_annual_2023"
+          ],
+          "retrieved": [
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/googl_10k_2026-02-05",
+            "inbox/aapl_annual_2023"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 0.25,
+          "ndcg_at_10": 0.43067655807339306
+        },
+        {
+          "qid": "q03",
+          "query": "What was Apple total revenue in fiscal 2023?",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_annual_2023"
+          ],
+          "retrieved": [
+            "inbox/aapl_annual_2023",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/googl_10k_2026-02-05",
+            "inbox/msft_facts_2026-06-02",
+            "inbox/googl_facts_2026-06-02",
+            "inbox/aapl_facts_2026-06-02"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q04",
+          "query": "What is Apple gross margin guidance?",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_annual_2023"
+          ],
+          "retrieved": [
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/googl_10k_2026-02-05",
+            "inbox/msft_10k_2025-07-30",
+            "memos/2026-06-02-public-market-brief",
+            "concepts/series-b-readiness",
+            "companies/northstar-public-markets",
+            "inbox/aapl_annual_2023"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 0.14285714285714285,
+          "ndcg_at_10": 0.3333333333333333
+        },
+        {
+          "qid": "q05",
+          "query": "What is the current net leverage ratio?",
+          "tier": "S2",
+          "style": "factoid",
+          "relevant": [
+            "meetings/2026-05-12-vertex-credit-call"
+          ],
+          "retrieved": [
+            "meetings/2026-05-12-vertex-credit-call",
+            "memos/2026-06-01-vertex-credit-underwriting",
+            "people/alice-liddell",
+            "people/bob-marchand",
+            "companies/wonderland-capital",
+            "people/carol-rivera",
+            "companies/vertex-credit",
+            "companies/acme-data",
+            "people/dana-kim",
+            "meetings/2026-05-28-alice-intro-call"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q06",
+          "query": "What happens if renewal bookings slip 8 percent?",
+          "tier": "S2",
+          "style": "factoid",
+          "relevant": [
+            "meetings/2026-05-12-vertex-credit-call"
+          ],
+          "retrieved": [
+            "meetings/2026-05-12-vertex-credit-call",
+            "people/carol-rivera",
+            "memos/2026-06-01-vertex-credit-underwriting",
+            "companies/vertex-credit",
+            "people/dana-kim",
+            "companies/acme-data",
+            "people/bob-marchand",
+            "meetings/2026-05-30-acme-product-review",
+            "companies/wonderland-capital",
+            "meetings/2026-05-28-alice-intro-call"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q07",
+          "query": "When is the next lender call scheduled?",
+          "tier": "S2",
+          "style": "factoid",
+          "relevant": [
+            "meetings/2026-05-12-vertex-credit-call"
+          ],
+          "retrieved": [
+            "meetings/2026-05-12-vertex-credit-call",
+            "companies/vertex-credit",
+            "people/dana-kim",
+            "meetings/2026-05-28-alice-intro-call",
+            "companies/acme-data",
+            "memos/2026-06-01-vertex-credit-underwriting",
+            "meetings/2026-05-30-acme-product-review",
+            "people/carol-rivera",
+            "companies/wonderland-capital",
+            "people/alice-liddell"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q08",
+          "query": "What is the enterprise value of Project Kingfisher?",
+          "tier": "S3",
+          "style": "factoid",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "companies/meridian-technologies",
+            "meetings/2026-06-01-meridian-diligence-sync",
+            "board_meeting_2026_05_28",
+            "memos/2026-05-28-sovereign-citadel-architecture",
+            "people/frank-orr"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 0.3333333333333333,
+          "ndcg_at_10": 0.5
+        },
+        {
+          "qid": "q09",
+          "query": "What is the EPS guidance revision?",
+          "tier": "S3",
+          "style": "factoid",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "board_meeting_2026_05_28",
+            "companies/meridian-technologies",
+            "people/frank-orr",
+            "meetings/2026-06-01-meridian-diligence-sync",
+            "memos/2026-05-28-sovereign-citadel-architecture"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q10",
+          "query": "What is the headcount reduction plan?",
+          "tier": "S3",
+          "style": "factoid",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "board_meeting_2026_05_28",
+            "companies/meridian-technologies",
+            "meetings/2026-06-01-meridian-diligence-sync",
+            "memos/2026-05-28-sovereign-citadel-architecture",
+            "people/frank-orr"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q11",
+          "query": "takeover price Meridian deal",
+          "tier": "S3",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "board_meeting_2026_05_28",
+            "companies/meridian-technologies",
+            "meetings/2026-06-01-meridian-diligence-sync",
+            "people/frank-orr",
+            "memos/2026-05-28-sovereign-citadel-architecture"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q12",
+          "query": "credit agreement headroom pressure",
+          "tier": "S2",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "meetings/2026-05-12-vertex-credit-call"
+          ],
+          "retrieved": [
+            "meetings/2026-05-12-vertex-credit-call",
+            "companies/vertex-credit",
+            "memos/2026-06-01-vertex-credit-underwriting",
+            "people/dana-kim",
+            "meetings/2026-05-30-acme-product-review",
+            "companies/acme-data",
+            "people/carol-rivera",
+            "people/bob-marchand",
+            "meetings/2026-05-28-alice-intro-call",
+            "people/alice-liddell"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q13",
+          "query": "Cook remarks on handset performance",
+          "tier": "S1",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "inbox/aapl_annual_2023"
+          ],
+          "retrieved": [
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/googl_10k_2026-02-05",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_annual_2023",
+            "concepts/series-b-readiness",
+            "inbox/msft_facts_2026-06-02",
+            "inbox/aapl_facts_2026-06-02"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 0.25,
+          "ndcg_at_10": 0.43067655807339306
+        },
+        {
+          "qid": "q14",
+          "query": "debt capacity revolving facility",
+          "tier": "S3",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "board_meeting_2026_05_28",
+            "companies/meridian-technologies",
+            "people/frank-orr",
+            "memos/2026-05-28-sovereign-citadel-architecture",
+            "meetings/2026-06-01-meridian-diligence-sync"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q15",
+          "query": "earnings per share upward revision",
+          "tier": "S3",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "board_meeting_2026_05_28",
+            "companies/meridian-technologies",
+            "meetings/2026-06-01-meridian-diligence-sync",
+            "people/frank-orr",
+            "memos/2026-05-28-sovereign-citadel-architecture"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q16",
+          "query": "Apple net sales total revenue fiscal 2025",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_10k_2025-10-31"
+          ],
+          "retrieved": [
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/googl_10k_2026-02-05",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_annual_2023"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q17",
+          "query": "iPhone net sales fiscal 2025",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_10k_2025-10-31"
+          ],
+          "retrieved": [
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/googl_10k_2026-02-05",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_annual_2023"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q18",
+          "query": "Microsoft Azure cloud revenue",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/msft_10k_2025-07-30"
+          ],
+          "retrieved": [
+            "inbox/googl_10k_2026-02-05",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/aapl_annual_2023",
+            "companies/northstar-public-markets",
+            "concepts/data-infra-kpi-glossary"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 0.5,
+          "ndcg_at_10": 0.6309297535714575
+        },
+        {
+          "qid": "q19",
+          "query": "Microsoft diluted EPS fiscal 2025",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_10k_2025-10-31"
+          ],
+          "retrieved": [
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/googl_10k_2026-02-05",
+            "inbox/msft_facts_2026-06-02"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q20",
+          "query": "Alphabet Google advertising revenue",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "retrieved": [
+            "inbox/googl_10k_2026-02-05",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_10k_2025-10-31",
+            "concepts/_template",
+            "inbox/aapl_annual_2023",
+            "concepts/data-infra-kpi-glossary",
+            "companies/northstar-public-markets"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q21",
+          "query": "Apple gross margin percentage",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_10k_2025-10-31"
+          ],
+          "retrieved": [
+            "inbox/aapl_10k_2025-10-31",
+            "concepts/series-b-readiness",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_annual_2023",
+            "inbox/googl_10k_2026-02-05",
+            "companies/northstar-public-markets",
+            "memos/2026-06-02-public-market-brief",
+            "inbox/msft_facts_2026-06-02",
+            "inbox/googl_facts_2026-06-02",
+            "inbox/aapl_facts_2026-06-02"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q22",
+          "query": "Apple shares outstanding common stock",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "retrieved": [
+            "inbox/googl_10k_2026-02-05",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_10k_2025-10-31",
+            "concepts/_template",
+            "inbox/aapl_facts_2026-06-02",
+            "inbox/googl_facts_2026-06-02",
+            "inbox/msft_facts_2026-06-02"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q23",
+          "query": "Microsoft total revenue fiscal 2025",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/msft_10k_2025-07-30"
+          ],
+          "retrieved": [
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/googl_10k_2026-02-05",
+            "inbox/aapl_annual_2023"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 0.5,
+          "ndcg_at_10": 0.6309297535714575
+        }
+      ]
+    },
+    "rrf": {
+      "macro": {
+        "recall_at_10": 1.0,
+        "mrr_at_10": 0.9456521739130435,
+        "ndcg_at_10": 0.9592002744193414
+      },
+      "per_query": [
+        {
+          "qid": "q01",
+          "query": "What was Apple iPhone segment revenue in 2023?",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_annual_2023"
+          ],
+          "retrieved": [
+            "inbox/aapl_annual_2023",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/googl_10k_2026-02-05",
+            "inbox/msft_facts_2026-06-02",
+            "inbox/googl_facts_2026-06-02"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q02",
+          "query": "What is Apple Q1 2024 revenue guidance?",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_annual_2023"
+          ],
+          "retrieved": [
+            "inbox/aapl_annual_2023",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q03",
+          "query": "What was Apple total revenue in fiscal 2023?",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_annual_2023"
+          ],
+          "retrieved": [
+            "inbox/aapl_annual_2023",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/googl_10k_2026-02-05",
+            "inbox/msft_facts_2026-06-02",
+            "inbox/googl_facts_2026-06-02"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q04",
+          "query": "What is Apple gross margin guidance?",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_annual_2023"
+          ],
+          "retrieved": [
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/msft_10k_2025-07-30",
+            "concepts/series-b-readiness",
+            "inbox/aapl_annual_2023",
+            "inbox/googl_10k_2026-02-05",
+            "memos/2026-06-02-public-market-brief",
+            "companies/northstar-public-markets"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 0.25,
+          "ndcg_at_10": 0.43067655807339306
+        },
+        {
+          "qid": "q05",
+          "query": "What is the current net leverage ratio?",
+          "tier": "S2",
+          "style": "factoid",
+          "relevant": [
+            "meetings/2026-05-12-vertex-credit-call"
+          ],
+          "retrieved": [
+            "meetings/2026-05-12-vertex-credit-call",
+            "memos/2026-06-01-vertex-credit-underwriting",
+            "people/carol-rivera",
+            "companies/acme-data",
+            "meetings/2026-05-28-alice-intro-call",
+            "people/dana-kim",
+            "people/alice-liddell",
+            "meetings/2026-05-30-acme-product-review",
+            "people/bob-marchand",
+            "companies/wonderland-capital"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q06",
+          "query": "What happens if renewal bookings slip 8 percent?",
+          "tier": "S2",
+          "style": "factoid",
+          "relevant": [
+            "meetings/2026-05-12-vertex-credit-call"
+          ],
+          "retrieved": [
+            "meetings/2026-05-12-vertex-credit-call",
+            "companies/acme-data",
+            "meetings/2026-05-28-alice-intro-call",
+            "people/carol-rivera",
+            "memos/2026-06-01-vertex-credit-underwriting",
+            "companies/vertex-credit",
+            "people/dana-kim",
+            "people/bob-marchand",
+            "meetings/2026-05-30-acme-product-review",
+            "companies/wonderland-capital"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q07",
+          "query": "When is the next lender call scheduled?",
+          "tier": "S2",
+          "style": "factoid",
+          "relevant": [
+            "meetings/2026-05-12-vertex-credit-call"
+          ],
+          "retrieved": [
+            "meetings/2026-05-12-vertex-credit-call",
+            "meetings/2026-05-28-alice-intro-call",
+            "meetings/2026-05-30-acme-product-review",
+            "people/alice-liddell",
+            "people/carol-rivera",
+            "companies/vertex-credit",
+            "people/dana-kim",
+            "companies/acme-data",
+            "memos/2026-06-01-vertex-credit-underwriting",
+            "companies/wonderland-capital"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q08",
+          "query": "What is the enterprise value of Project Kingfisher?",
+          "tier": "S3",
+          "style": "factoid",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "board_meeting_2026_05_28",
+            "meetings/2026-06-01-meridian-diligence-sync",
+            "companies/meridian-technologies",
+            "memos/2026-05-28-sovereign-citadel-architecture",
+            "people/frank-orr"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q09",
+          "query": "What is the EPS guidance revision?",
+          "tier": "S3",
+          "style": "factoid",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "board_meeting_2026_05_28",
+            "memos/2026-05-28-sovereign-citadel-architecture",
+            "meetings/2026-06-01-meridian-diligence-sync",
+            "companies/meridian-technologies",
+            "people/frank-orr"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q10",
+          "query": "What is the headcount reduction plan?",
+          "tier": "S3",
+          "style": "factoid",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "board_meeting_2026_05_28",
+            "meetings/2026-06-01-meridian-diligence-sync",
+            "companies/meridian-technologies",
+            "memos/2026-05-28-sovereign-citadel-architecture",
+            "people/frank-orr"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q11",
+          "query": "takeover price Meridian deal",
+          "tier": "S3",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "companies/meridian-technologies",
+            "board_meeting_2026_05_28",
+            "meetings/2026-06-01-meridian-diligence-sync",
+            "people/frank-orr",
+            "memos/2026-05-28-sovereign-citadel-architecture"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 0.5,
+          "ndcg_at_10": 0.6309297535714575
+        },
+        {
+          "qid": "q12",
+          "query": "credit agreement headroom pressure",
+          "tier": "S2",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "meetings/2026-05-12-vertex-credit-call"
+          ],
+          "retrieved": [
+            "meetings/2026-05-12-vertex-credit-call",
+            "memos/2026-06-01-vertex-credit-underwriting",
+            "companies/vertex-credit",
+            "people/dana-kim",
+            "meetings/2026-05-30-acme-product-review",
+            "companies/acme-data",
+            "people/carol-rivera",
+            "people/bob-marchand",
+            "meetings/2026-05-28-alice-intro-call",
+            "people/alice-liddell"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q13",
+          "query": "Cook remarks on handset performance",
+          "tier": "S1",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "inbox/aapl_annual_2023"
+          ],
+          "retrieved": [
+            "inbox/aapl_annual_2023",
+            "inbox/googl_10k_2026-02-05",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/msft_10k_2025-07-30"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q14",
+          "query": "debt capacity revolving facility",
+          "tier": "S3",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "board_meeting_2026_05_28",
+            "companies/meridian-technologies",
+            "people/frank-orr",
+            "memos/2026-05-28-sovereign-citadel-architecture",
+            "meetings/2026-06-01-meridian-diligence-sync"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q15",
+          "query": "earnings per share upward revision",
+          "tier": "S3",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "board_meeting_2026_05_28",
+            "memos/2026-05-28-sovereign-citadel-architecture",
+            "companies/meridian-technologies",
+            "meetings/2026-06-01-meridian-diligence-sync",
+            "people/frank-orr"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q16",
+          "query": "Apple net sales total revenue fiscal 2025",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_10k_2025-10-31"
+          ],
+          "retrieved": [
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_annual_2023",
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q17",
+          "query": "iPhone net sales fiscal 2025",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_10k_2025-10-31"
+          ],
+          "retrieved": [
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_annual_2023",
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q18",
+          "query": "Microsoft Azure cloud revenue",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/msft_10k_2025-07-30"
+          ],
+          "retrieved": [
+            "inbox/msft_10k_2025-07-30",
+            "inbox/googl_10k_2026-02-05",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/aapl_annual_2023",
+            "companies/northstar-public-markets",
+            "concepts/data-infra-kpi-glossary"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q19",
+          "query": "Microsoft diluted EPS fiscal 2025",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_10k_2025-10-31"
+          ],
+          "retrieved": [
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_facts_2026-06-02",
+            "inbox/googl_facts_2026-06-02",
+            "inbox/msft_facts_2026-06-02",
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q20",
+          "query": "Alphabet Google advertising revenue",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "retrieved": [
+            "inbox/googl_10k_2026-02-05",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_10k_2025-10-31",
+            "concepts/_template",
+            "inbox/aapl_annual_2023"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q21",
+          "query": "Apple gross margin percentage",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_10k_2025-10-31"
+          ],
+          "retrieved": [
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_annual_2023",
+            "concepts/series-b-readiness",
+            "inbox/googl_10k_2026-02-05",
+            "companies/northstar-public-markets"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q22",
+          "query": "Apple shares outstanding common stock",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "retrieved": [
+            "inbox/googl_10k_2026-02-05",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/msft_10k_2025-07-30"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q23",
+          "query": "Microsoft total revenue fiscal 2025",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/msft_10k_2025-07-30"
+          ],
+          "retrieved": [
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_annual_2023",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        }
+      ]
+    },
+    "rrf_rerank": {
+      "macro": {
+        "recall_at_10": 1.0,
+        "mrr_at_10": 0.9202898550724639,
+        "ndcg_at_10": 0.9404752066770199
+      },
+      "per_query": [
+        {
+          "qid": "q01",
+          "query": "What was Apple iPhone segment revenue in 2023?",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_annual_2023"
+          ],
+          "retrieved": [
+            "inbox/aapl_annual_2023",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/googl_10k_2026-02-05",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/googl_facts_2026-06-02",
+            "inbox/msft_facts_2026-06-02"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q02",
+          "query": "What is Apple Q1 2024 revenue guidance?",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_annual_2023"
+          ],
+          "retrieved": [
+            "inbox/aapl_annual_2023",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q03",
+          "query": "What was Apple total revenue in fiscal 2023?",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_annual_2023"
+          ],
+          "retrieved": [
+            "inbox/aapl_annual_2023",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/googl_10k_2026-02-05",
+            "inbox/googl_facts_2026-06-02",
+            "inbox/msft_facts_2026-06-02"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q04",
+          "query": "What is Apple gross margin guidance?",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_annual_2023"
+          ],
+          "retrieved": [
+            "inbox/aapl_annual_2023",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/msft_10k_2025-07-30",
+            "concepts/series-b-readiness",
+            "inbox/googl_10k_2026-02-05",
+            "companies/northstar-public-markets",
+            "memos/2026-06-02-public-market-brief"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q05",
+          "query": "What is the current net leverage ratio?",
+          "tier": "S2",
+          "style": "factoid",
+          "relevant": [
+            "meetings/2026-05-12-vertex-credit-call"
+          ],
+          "retrieved": [
+            "meetings/2026-05-12-vertex-credit-call",
+            "companies/acme-data",
+            "people/carol-rivera",
+            "people/bob-marchand",
+            "memos/2026-06-01-vertex-credit-underwriting",
+            "companies/wonderland-capital",
+            "companies/vertex-credit",
+            "people/alice-liddell",
+            "meetings/2026-05-30-acme-product-review",
+            "meetings/2026-05-28-alice-intro-call"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q06",
+          "query": "What happens if renewal bookings slip 8 percent?",
+          "tier": "S2",
+          "style": "factoid",
+          "relevant": [
+            "meetings/2026-05-12-vertex-credit-call"
+          ],
+          "retrieved": [
+            "meetings/2026-05-12-vertex-credit-call",
+            "companies/acme-data",
+            "people/dana-kim",
+            "memos/2026-06-01-vertex-credit-underwriting",
+            "people/carol-rivera",
+            "people/alice-liddell",
+            "companies/wonderland-capital",
+            "companies/vertex-credit",
+            "meetings/2026-05-28-alice-intro-call",
+            "meetings/2026-05-30-acme-product-review"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q07",
+          "query": "When is the next lender call scheduled?",
+          "tier": "S2",
+          "style": "factoid",
+          "relevant": [
+            "meetings/2026-05-12-vertex-credit-call"
+          ],
+          "retrieved": [
+            "meetings/2026-05-12-vertex-credit-call",
+            "companies/wonderland-capital",
+            "people/carol-rivera",
+            "people/bob-marchand",
+            "people/alice-liddell",
+            "companies/vertex-credit",
+            "companies/acme-data",
+            "people/dana-kim",
+            "meetings/2026-05-28-alice-intro-call",
+            "memos/2026-06-01-vertex-credit-underwriting"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q08",
+          "query": "What is the enterprise value of Project Kingfisher?",
+          "tier": "S3",
+          "style": "factoid",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "board_meeting_2026_05_28",
+            "meetings/2026-06-01-meridian-diligence-sync",
+            "companies/meridian-technologies",
+            "people/frank-orr",
+            "memos/2026-05-28-sovereign-citadel-architecture"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q09",
+          "query": "What is the EPS guidance revision?",
+          "tier": "S3",
+          "style": "factoid",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "board_meeting_2026_05_28",
+            "memos/2026-05-28-sovereign-citadel-architecture",
+            "meetings/2026-06-01-meridian-diligence-sync",
+            "companies/meridian-technologies",
+            "people/frank-orr"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q10",
+          "query": "What is the headcount reduction plan?",
+          "tier": "S3",
+          "style": "factoid",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "board_meeting_2026_05_28",
+            "meetings/2026-06-01-meridian-diligence-sync",
+            "companies/meridian-technologies",
+            "memos/2026-05-28-sovereign-citadel-architecture",
+            "people/frank-orr"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q11",
+          "query": "takeover price Meridian deal",
+          "tier": "S3",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "board_meeting_2026_05_28",
+            "companies/meridian-technologies",
+            "meetings/2026-06-01-meridian-diligence-sync",
+            "people/frank-orr",
+            "memos/2026-05-28-sovereign-citadel-architecture"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q12",
+          "query": "credit agreement headroom pressure",
+          "tier": "S2",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "meetings/2026-05-12-vertex-credit-call"
+          ],
+          "retrieved": [
+            "meetings/2026-05-12-vertex-credit-call",
+            "companies/vertex-credit",
+            "memos/2026-06-01-vertex-credit-underwriting",
+            "people/dana-kim",
+            "people/bob-marchand",
+            "people/alice-liddell",
+            "companies/acme-data",
+            "meetings/2026-05-28-alice-intro-call",
+            "meetings/2026-05-30-acme-product-review",
+            "companies/wonderland-capital"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q13",
+          "query": "Cook remarks on handset performance",
+          "tier": "S1",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "inbox/aapl_annual_2023"
+          ],
+          "retrieved": [
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_annual_2023",
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 0.3333333333333333,
+          "ndcg_at_10": 0.5
+        },
+        {
+          "qid": "q14",
+          "query": "debt capacity revolving facility",
+          "tier": "S3",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "board_meeting_2026_05_28",
+            "companies/meridian-technologies",
+            "memos/2026-05-28-sovereign-citadel-architecture",
+            "meetings/2026-06-01-meridian-diligence-sync",
+            "people/frank-orr"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q15",
+          "query": "earnings per share upward revision",
+          "tier": "S3",
+          "style": "paraphrase-hard",
+          "relevant": [
+            "board_meeting_2026_05_28"
+          ],
+          "retrieved": [
+            "board_meeting_2026_05_28",
+            "companies/meridian-technologies",
+            "memos/2026-05-28-sovereign-citadel-architecture",
+            "meetings/2026-06-01-meridian-diligence-sync",
+            "people/frank-orr"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q16",
+          "query": "Apple net sales total revenue fiscal 2025",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_10k_2025-10-31"
+          ],
+          "retrieved": [
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/aapl_annual_2023",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q17",
+          "query": "iPhone net sales fiscal 2025",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_10k_2025-10-31"
+          ],
+          "retrieved": [
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/aapl_annual_2023",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q18",
+          "query": "Microsoft Azure cloud revenue",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/msft_10k_2025-07-30"
+          ],
+          "retrieved": [
+            "inbox/msft_10k_2025-07-30",
+            "inbox/googl_10k_2026-02-05",
+            "inbox/aapl_10k_2025-10-31",
+            "concepts/data-infra-kpi-glossary",
+            "inbox/aapl_annual_2023",
+            "companies/northstar-public-markets"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q19",
+          "query": "Microsoft diluted EPS fiscal 2025",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_10k_2025-10-31"
+          ],
+          "retrieved": [
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/googl_facts_2026-06-02",
+            "inbox/aapl_facts_2026-06-02",
+            "inbox/msft_facts_2026-06-02",
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 0.5,
+          "ndcg_at_10": 0.6309297535714575
+        },
+        {
+          "qid": "q20",
+          "query": "Alphabet Google advertising revenue",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "retrieved": [
+            "inbox/googl_10k_2026-02-05",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/aapl_annual_2023",
+            "concepts/_template"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q21",
+          "query": "Apple gross margin percentage",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/aapl_10k_2025-10-31"
+          ],
+          "retrieved": [
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/aapl_annual_2023",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/googl_10k_2026-02-05",
+            "concepts/series-b-readiness",
+            "companies/northstar-public-markets"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        },
+        {
+          "qid": "q22",
+          "query": "Apple shares outstanding common stock",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "retrieved": [
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/msft_10k_2025-07-30",
+            "inbox/googl_10k_2026-02-05"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 0.3333333333333333,
+          "ndcg_at_10": 0.5
+        },
+        {
+          "qid": "q23",
+          "query": "Microsoft total revenue fiscal 2025",
+          "tier": "S1",
+          "style": "factoid",
+          "relevant": [
+            "inbox/msft_10k_2025-07-30"
+          ],
+          "retrieved": [
+            "inbox/msft_10k_2025-07-30",
+            "inbox/googl_10k_2026-02-05",
+            "inbox/aapl_10k_2025-10-31",
+            "inbox/aapl_annual_2023"
+          ],
+          "recall_at_10": 1.0,
+          "mrr_at_10": 1.0,
+          "ndcg_at_10": 1.0
+        }
+      ]
+    }
+  }
+}
