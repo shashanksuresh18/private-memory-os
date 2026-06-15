@@ -114,6 +114,79 @@ def repo_relative_path(vault_path: Path, page_path: Path) -> str:
         return str(abs_page)
 
 
+def ingest_page(
+    vault_path: Path | str,
+    file_path: Path | str,
+    db_path: Path | str | None = None,
+    embedder: Embedder | None = None,
+) -> int | None:
+    """Index exactly ONE markdown page into the retrieval DB and return its
+    chunk count (or None if the page is derived / has no valid tier).
+
+    Delete-by-slug then re-insert, so a re-submitted page is refreshed, not
+    duplicated (the ``ON DELETE CASCADE`` + FTS delete trigger clear the old
+    chunks/vectors/FTS rows). This is the surface ``POST /ingest`` uses: a
+    drop-a-note write must index ONLY the page it just wrote, never sweep the
+    whole vault — so the returned count reflects the submitted document alone
+    (not any auto-wiki concept pages a prior query queued), and the call is
+    bounded (no re-embedding the backlog, no hang under Ollama contention).
+    Whole-vault catch-up for manually-added or auto-wiki pages stays the job of
+    the scheduled ``ingest_new.py --reindex`` pass and the vault bridge.
+
+    Mirrors the per-file logic in ``src/mcp/vault-bridge/server.py:ingest_file``
+    (which should delegate here in a future cleanup — tech-debt).
+    """
+    vault_path = Path(vault_path)
+    file_path = Path(file_path)
+    slug = _slug(vault_path, file_path)
+
+    source_text = file_path.read_bytes().decode("utf-8")
+    if is_derived(source_text):
+        return None
+    try:
+        tier = parse_tier(source_text, file_path)
+    except TierMissingError:
+        return None
+
+    if embedder is None:
+        embedder = HashEmbedder()
+
+    conn = dbmod.connect(db_path)
+    try:
+        # FK cascade must be on for the page delete to clear chunks/vectors.
+        conn.execute("PRAGMA foreign_keys = ON")
+        conn.execute("DELETE FROM pages WHERE page_slug = ?", (slug,))
+
+        now = datetime.now(timezone.utc).isoformat()
+        sha256 = hashlib.sha256(source_text.encode("utf-8")).hexdigest()
+        cur = conn.execute(
+            "INSERT INTO pages(page_slug, page_path, tier, sha256, ingested_at) "
+            "VALUES (?,?,?,?,?)",
+            (slug, repo_relative_path(vault_path, file_path), tier, sha256, now),
+        )
+        page_id = cur.lastrowid
+
+        chunks = chunk_markdown(source_text)
+        for idx, ch in enumerate(chunks):
+            cur = conn.execute(
+                "INSERT INTO chunks(page_id, chunk_index, chunk_start_byte, "
+                "chunk_end_byte, line_start, line_end, tier, text) "
+                "VALUES (?,?,?,?,?,?,?,?)",
+                (page_id, idx, ch.byte_start, ch.byte_end,
+                 ch.line_start, ch.line_end, tier, ch.text),
+            )
+            chunk_id = cur.lastrowid
+            vec = embedder.embed(ch.text)
+            conn.execute(
+                "INSERT INTO vectors(chunk_id, dim, embedding) VALUES (?,?,?)",
+                (chunk_id, len(vec), pack_vector(vec)),
+            )
+        conn.commit()
+    finally:
+        conn.close()
+    return len(chunks)
+
+
 def ingest_vault(
     vault_path: Path | str,
     db_path: Path | str | None = None,

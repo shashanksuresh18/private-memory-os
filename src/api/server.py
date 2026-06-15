@@ -35,7 +35,7 @@ from src.retrieval.embedder import make_embedder
 from src.retrieval.db import DEFAULT_DB_PATH
 from src.retrieval.engine import Citation, retrieve
 from src.retrieval.auto_wiki import run_auto_wiki
-from src.retrieval.index import ingest_vault
+from src.retrieval.index import ingest_page, ingest_vault
 from src.ingest.structurer import DOC_TYPES, structure_content
 from src.memory.graph.db import DEFAULT_DB_PATH as GRAPH_DB_PATH
 
@@ -55,11 +55,28 @@ AUDIT_ROOT = REPO_ROOT / "audit"
 # returned rather than low-confidence noise. Configurable via RETRIEVAL_MIN_SCORE.
 MIN_SCORE = 0.01
 NO_RESULTS_MESSAGE = "No relevant documents found in vault"
+
+# Auto-wiki kill-switch (default ON). When AUTO_WIKI_ENABLED is false, /retrieve
+# stops spawning the background gemma concept-extraction daemon. Lets an operator
+# silence the concept-page generation that otherwise accretes vault/concepts/*.md
+# on every query. /ingest never triggers auto-wiki (it indexes only its own page),
+# so this only gates the /retrieve path.
+_AUTO_WIKI_OFF = {"false", "0", "no", "off"}
 _WORD_RE = re.compile(r"[a-z0-9]+")
 
 # Document shapes accepted by POST /ingest. Mirrors structurer.DOC_TYPES.
 INGEST_DOC_TYPES = set(DOC_TYPES)
 _SLUG_RE = re.compile(r"[^a-z0-9]+")
+
+# doc_type -> vault subfolder (gbrain-base schema: people/companies/meetings/
+# memos/inbox/concepts). Types with a dedicated schema folder are routed there
+# so they appear organized when browsing the vault in Obsidian; types without
+# one (research, email) fall back to inbox/. Tier still lives in the page
+# frontmatter, never the folder -- routing is organization, not classification,
+# and ingest_vault scans every folder except raw/ + archive/, so retrieval is
+# unaffected by where a page lands.
+DOC_TYPE_FOLDER = {"meeting": "meetings", "memo": "memos", "company": "companies"}
+DEFAULT_INGEST_FOLDER = "inbox"
 
 
 def _min_score() -> float:
@@ -85,11 +102,13 @@ class RetrieveRequest(BaseModel):
 
 
 class IngestRequest(BaseModel):
-    # Plain str (not Literal) so invalid values produce a 400 with a
-    # plain-English message instead of a pydantic 422 wall of text.
-    content: str
-    doc_type: str
-    tier: str
+    # Plain str (not Literal) AND optional with None defaults so BOTH invalid
+    # values and MISSING fields reach the handler and produce a 400 with a
+    # plain-English message, instead of a pydantic 422 validation wall. The
+    # handler tolerates None on every field via ``(body.x or "")``.
+    content: str | None = None
+    doc_type: str | None = None
+    tier: str | None = None
     title: str | None = None
 
 
@@ -169,6 +188,11 @@ def _schedule_auto_wiki(citations: list[Citation]) -> None:
         and not inline
         and extractor is None
     ):
+        return
+    # Production kill-switch: when not explicitly set on app.state, honor the
+    # AUTO_WIKI_ENABLED env (default on). The pytest guard above keeps tests
+    # offline regardless of env.
+    if enabled is None and os.environ.get("AUTO_WIKI_ENABLED", "true").strip().lower() in _AUTO_WIKI_OFF:
         return
     if inline:
         run_auto_wiki(citations, vault_root=vault_root, extractor=extractor)
@@ -683,9 +707,10 @@ def ingest_endpoint(body: IngestRequest) -> dict[str, Any]:
 
     title = (body.title or "").strip() or _derive_title(content)
     today = date.today().isoformat()
-    inbox = _vault_root(app) / "inbox"
-    inbox.mkdir(parents=True, exist_ok=True)
-    out_path = _unique_inbox_path(inbox, f"{today}_{_slugify(title)}")
+    folder = DOC_TYPE_FOLDER.get(doc_type, DEFAULT_INGEST_FOLDER)
+    dest_dir = _vault_root(app) / folder
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    out_path = _unique_inbox_path(dest_dir, f"{today}_{_slugify(title)}")
 
     # Structurer is injectable so tests run without a real Ollama; production
     # uses the loopback gemma4-citadel structurer.
@@ -697,14 +722,16 @@ def ingest_endpoint(body: IngestRequest) -> dict[str, Any]:
             structured_body = structurer(content, doc_type)
             markdown = _render_ingest_markdown(tier, doc_type, today, title, structured_body)
             out_path.write_text(markdown, encoding="utf-8")
-            # Incremental, never reset: append the new page only, preserving the
-            # existing index (skips every already-indexed page_slug before embed).
-            stats = ingest_vault(
+            # Index ONLY the page we just wrote. Single-page ingest keeps the
+            # call bounded (no whole-vault sweep that would re-embed a backlog of
+            # auto-wiki concept pages and stall under Ollama contention) and makes
+            # `chunks` reflect the submitted document alone. Other vault changes
+            # are caught by the scheduled `ingest_new.py --reindex` + vault bridge.
+            chunks = ingest_page(
                 _vault_root(app),
+                out_path,
                 db_path=_db_path(app),
                 embedder=embedder,
-                reset=False,
-                incremental=True,
             )
     except RuntimeError:
         raise
@@ -714,8 +741,10 @@ def ingest_endpoint(body: IngestRequest) -> dict[str, Any]:
 
     return {
         "filename": out_path.name,
+        "folder": folder,
+        "path": f"{folder}/{out_path.name}",
         "tier": tier,
-        "chunks": int(stats.get("chunks", 0)),
+        "chunks": int(chunks or 0),
         "status": "indexed",
     }
 
