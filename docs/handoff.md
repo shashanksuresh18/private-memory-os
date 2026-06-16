@@ -6,6 +6,43 @@ This handoff supersedes the prior `docs/handoff.md` that mis-scoped P0 as "close
 
 ---
 
+## SESSION 2026-06-16 (b) — UI polish: stale-results fix + loading/error/empty states + Odysseus-inspired refinement
+
+Front-end-only pass (no Python touched, no engine/tier/egress code changed). Goal: fix the stale-search-results UX bug and broadly polish the workspace UI, drawing interaction inspiration from PewDiePie's AGPL [Odysseus](https://github.com/pewdiepie-archdaemon/odysseus) workspace (studied, not copied).
+
+**Safety gate ✅** — `test_no_egress_on_s3` → **12/12 passed** (run at session start, before any edit).
+
+**DB counts (unchanged by this session — UI-only) ✅** — `retrieval.db`: **152 pages** (S1 13 / S2 106 / S3 33), **1165 chunks == 1165 vectors** (1:1, no orphans). NOTE: this is above the 2026-06-15 "124-page clean baseline" — later ingest/test artifacts have re-accreted; durable cleanup (per the 2026-06-15 vault-cleanup procedure) is a separate follow-up, untouched here.
+
+**The stale-results bug (fixed).**
+- *Before:* `useSearch` initialised `results` to `MOCK_CITATIONS` and `runSearch` only called `setResults()` AFTER the `await` resolved — so old results stayed on screen for the whole request and the command centre opened showing fake mock citations. Worse, `api.ts` `queryEngine`/`queryEngineWithAnswer` swallowed every fetch failure and returned `MOCK_CITATIONS`, rendering stale/fake data as if it were the live query's result. No loading state (only a button-label flip), no error state.
+- *After:* `useSearch` is a `status` state machine (`idle | loading | ready | error`). On submit it clears results immediately, shows a loading skeleton, and renders new results only on success; failures show an explicit error panel with a retry button; empty queries reset to an idle prompt; the command centre opens idle (no mock data). `api.ts` now throws on network error / non-OK instead of masking with mock, so outages surface as a real error state.
+
+**Other UI/UX + robustness improvements:**
+- Loading skeleton (shimmer) for search; loading skeleton rows for the Evidence Vault inventory fetch (previously flashed an empty table). `prefers-reduced-motion` disables the animations.
+- Disabled states + `aria-busy` on the search input/tier-select/answer-toggle/submit during the async query; submit shows an inline spinner (consistent with the existing Add Document screen).
+- Distinct empty states: "No results found" vs. "No matches under the current tier filter — try the All tab."
+- Result-card polish: more padding/whitespace, smoother hover transition, more readable preview line-height.
+- Refined tier badges (incl. the S3 SEALED badge) for legibility (`h-5`/`text-xs`/`font-semibold`).
+- **Cleanup (removed repeated/conflicting CSS):** deleted an off-theme dark-palette duplicate of `.answer-panel`/`.answer-toggle` in `app.css` that — because `app.css` imports `dashboard/styles.css` first — was overriding the themed (cream, tier-aware) version and rendering the answer panel sky-blue. The themed version in `styles.css` now applies.
+- **Security posture preserved:** `SafetyBar` (cloud-blocked / no-model-call / no-live-provider indicators) untouched; S3 sealing in the Citation Viewer + Answer panel untouched.
+
+**Files modified (UI only):** `src/ui/api.ts`, `src/ui/App.tsx`, `src/ui/EvidenceVault.tsx`, `src/ui/app.css`, `src/ui/dashboard/styles.css`, `src/ui/dashboard/components/tier-badge.tsx`. **New:** `ACKNOWLEDGMENTS.md` (root) — credits Odysseus as design inspiration, states no code copied verbatim.
+
+**Build ✅** — `npm run build` → **zero errors** (43 modules, built ~327ms). (The `ExperimentalWarning: CommonJS … loading ES Module` line from the vite config loader is a warning, not an error.)
+
+**Tests ✅** — `python -m pytest tests/ --timeout=300 -q -p no:cacheprovider` → **190 collected, 189 passed, 1 skipped, 0 failures, 0 errors** (counts read from JUnit XML; skip = `llama3.2:3b` classifier integration, model not pulled). No Python changed; no regressions. Use `--timeout=300` (not 120 — cold `sentence_transformers` import can exceed 120s and pytest-timeout's Windows thread method kills the whole run).
+
+**NEXT SESSION — prioritized action items (noted, NOT done this session):**
+1. **Command palette still previews `MOCK_CITATIONS`.** `usePalette` in `src/ui/App.tsx` filters/renders mock citations for its Ctrl+K preview list. Same fake-data risk class as the stale-results bug just fixed — remove it (wire the palette to the live engine, or drop the preview list) so no surface renders mock data as if real.
+2. **Vault drifted to 152 pages from test artifacts** (S1 13 / S2 106 / S3 33; real baseline = 124, S1 13 / S2 99 / S3 12). Clean back to the real baseline per the 2026-06-15 vault-cleanup procedure (delete session test artifacts from `vault/`, then `python -m scripts.ingest_new --rebuild` with nomic warmed first). The +21 are ingest/test docs, not real content.
+
+**Other known limitations:**
+- No automated front-end tests exist (testing.md specifies Vitest/Playwright but none are wired). These UI changes were verified by build + manual reasoning, not a UI test. Adding Vitest coverage for `useSearch` state transitions is a sensible next step.
+- The `_relevance` lexical-gate weakness remains open (pre-existing, see below).
+
+---
+
 ## SESSION 2026-06-16 — new-laptop / portability checklist
 
 How to stand up and test the system on a fresh machine. **Key principle: git carries the CODE, never the DATA.** A clean clone is a fully working system with zero content.

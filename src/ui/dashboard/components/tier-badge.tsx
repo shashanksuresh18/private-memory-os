@@ -19,7 +19,7 @@ export function TierBadge({ tier, dot = true, label, className }: {
   const t = tierTokens[tier];
   return (
     <span className={cn(
-      "inline-flex items-center gap-1 h-[18px] px-1.5 rounded-xs font-mono text-[10.5px] font-medium uppercase whitespace-nowrap border",
+      "inline-flex items-center gap-1 h-5 px-2 rounded-xs font-mono text-xs font-semibold uppercase whitespace-nowrap border",
       t.text, t.bg, t.border, className,
     )} style={{ letterSpacing: "0.08em" }}>
       {dot ? <span className="block w-1.5 h-1.5 rounded-full bg-current" /> : null}

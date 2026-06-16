@@ -1,4 +1,4 @@
-import { MOCK_CITATIONS, type Citation, type CitationAnchor } from "./types";
+import { type Citation, type CitationAnchor } from "./types";
 
 const ENGINE_URL = "http://127.0.0.1:7734/retrieve";
 const API_ROOT = "http://127.0.0.1:7734";
@@ -81,18 +81,22 @@ export async function queryEngine(
   tier: string,
   k: number = 10,
 ): Promise<Citation[]> {
+  // Surface failures to the caller so the UI can show a real error state.
+  // Returning mock data here previously masked outages and rendered stale/fake
+  // citations as if they belonged to the live query.
+  let res: Response;
   try {
-    const res = await fetch(ENGINE_URL, {
+    res = await fetch(ENGINE_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ query, tier, k }),
     });
-    const data = await res.json();
-    return (data.citations ?? []).map(normalizeCitation);
   } catch {
-    console.warn("Engine unreachable - mock fallback");
-    return MOCK_CITATIONS;
+    throw new Error("Engine unreachable - start the local server (127.0.0.1:7734) and try again.");
   }
+  if (!res.ok) throw new Error(`Search failed (HTTP ${res.status}).`);
+  const data = await res.json();
+  return (data.citations ?? []).map(normalizeCitation);
 }
 
 /**
@@ -105,21 +109,22 @@ export async function queryEngineWithAnswer(
   tier: string,
   k: number = 10,
 ): Promise<EngineResponse> {
+  let res: Response;
   try {
-    const res = await fetch(ENGINE_URL, {
+    res = await fetch(ENGINE_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ query, tier, k, answer: true }),
     });
-    const data = await res.json();
-    return {
-      ...data,
-      citations: (data.citations ?? []).map(normalizeCitation),
-    };
   } catch {
-    console.warn("Engine unreachable - mock fallback");
-    return { citations: MOCK_CITATIONS };
+    throw new Error("Engine unreachable - start the local server (127.0.0.1:7734) and try again.");
   }
+  if (!res.ok) throw new Error(`Search failed (HTTP ${res.status}).`);
+  const data = await res.json();
+  return {
+    ...data,
+    citations: (data.citations ?? []).map(normalizeCitation),
+  };
 }
 
 export async function fetchStats(): Promise<Stats> {

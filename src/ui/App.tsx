@@ -37,32 +37,55 @@ function useTier() {
   return { tier, setTier, resolvedTier, allows };
 }
 
+type SearchStatus = "idle" | "loading" | "ready" | "error";
+
 function useSearch(initialTier: TierContext) {
   const [query, setQuery] = React.useState("");
-  const [results, setResults] = React.useState<Citation[]>(MOCK_CITATIONS);
-  const [loading, setLoading] = React.useState(false);
+  // Start empty: the command centre opens on an idle prompt, not fake data.
+  const [results, setResults] = React.useState<Citation[]>([]);
+  const [status, setStatus] = React.useState<SearchStatus>("idle");
+  const [error, setError] = React.useState<string | null>(null);
   // Answer toggle: default OFF preserves existing search-only behaviour.
   const [answerOn, setAnswerOn] = React.useState(false);
   const [answer, setAnswer] = React.useState<EngineResponse | null>(null);
 
   const runSearch = React.useCallback(async (nextQuery: string, nextTier: TierContext) => {
-    setQuery(nextQuery.trim());
-    setLoading(true);
+    const trimmed = nextQuery.trim();
+    setQuery(trimmed);
+    // Empty query: reset to idle rather than firing a request.
+    if (!trimmed) {
+      setResults([]);
+      setAnswer(null);
+      setError(null);
+      setStatus("idle");
+      return;
+    }
+    // Clear stale results immediately on submit so old data can never read as
+    // the new query's, then show the loading state while the request runs.
+    setResults([]);
+    setAnswer(null);
+    setError(null);
+    setStatus("loading");
     try {
       if (answerOn) {
-        const res = await queryEngineWithAnswer(nextQuery.trim(), nextTier, 10);
+        const res = await queryEngineWithAnswer(trimmed, nextTier, 10);
         setResults(res.citations);
         setAnswer(res.answer ? res : null);
       } else {
-        setResults(await queryEngine(nextQuery.trim(), nextTier, 10));
+        setResults(await queryEngine(trimmed, nextTier, 10));
         setAnswer(null);
       }
-    } finally {
-      setLoading(false);
+      setStatus("ready");
+    } catch (err) {
+      setResults([]);
+      setAnswer(null);
+      setError(err instanceof Error ? err.message : "Search failed.");
+      setStatus("error");
     }
   }, [answerOn]);
 
-  return { query, setQuery, results, loading, runSearch, initialTier, answerOn, setAnswerOn, answer };
+  const loading = status === "loading";
+  return { query, setQuery, results, status, loading, error, runSearch, initialTier, answerOn, setAnswerOn, answer };
 }
 
 function useStats() {
@@ -179,14 +202,22 @@ export function App() {
   // Graph node click -> retrieve that page from the engine, open the Citation Viewer.
   const onGraphSelect = React.useCallback(async (node: GraphNode) => {
     const pagePath = node.source_file ?? node.id;
-    const cites = await queryEngine(pagePath, tierState.tier, 10);
-    const match = cites.find((c) => c.page_path === pagePath || c.page_path.endsWith(pagePath)) ?? cites[0];
-    if (match) viewer.openViewer(match);
+    try {
+      const cites = await queryEngine(pagePath, tierState.tier, 10);
+      const match = cites.find((c) => c.page_path === pagePath || c.page_path.endsWith(pagePath)) ?? cites[0];
+      if (match) viewer.openViewer(match);
+    } catch {
+      // Node click is best-effort; a transient engine error should not crash the view.
+    }
   }, [tierState.tier, viewer]);
   // CRM row click -> retrieve that contact/company by name, open the Citation Viewer.
   const onOpenPage = React.useCallback(async (query: string, tier: Tier) => {
-    const cites = await queryEngine(query, tier, 10);
-    if (cites.length) viewer.openViewer(cites[0]);
+    try {
+      const cites = await queryEngine(query, tier, 10);
+      if (cites.length) viewer.openViewer(cites[0]);
+    } catch {
+      // Best-effort open; ignore transient engine errors.
+    }
   }, [viewer]);
   const visibleResults = search.results
     .filter(tierState.allows)
@@ -230,15 +261,20 @@ export function App() {
           <PrivacyRouting />
         ) : route === "/command-centre" ? (
         <>
-        <form className="search-shell" onSubmit={submit}>
+        <form className="search-shell" onSubmit={submit} aria-busy={search.loading}>
           <input
             value={search.query}
             onChange={(event) => search.setQuery(event.target.value)}
             type="search"
             placeholder="Search citations"
             autoComplete="off"
+            disabled={search.loading}
           />
-          <select value={tierState.tier} onChange={(event) => tierState.setTier(event.target.value as TierContext)}>
+          <select
+            value={tierState.tier}
+            onChange={(event) => tierState.setTier(event.target.value as TierContext)}
+            disabled={search.loading}
+          >
             {SEARCH_TIERS.map((tier) => <option key={tier} value={tier}>{tier === "Auto" ? "Auto = S3" : tier}</option>)}
           </select>
           <button
@@ -248,10 +284,17 @@ export function App() {
             aria-pressed={search.answerOn}
             onClick={() => search.setAnswerOn((on) => !on)}
             title="Extraction answer layer (verbatim quotes only)"
+            disabled={search.loading}
           >
             Answer {search.answerOn ? "ON" : "OFF"}
           </button>
-          <button type="submit">{search.loading ? "Searching" : "Search"}</button>
+          <button type="submit" disabled={search.loading}>
+            {search.loading ? (
+              <><span className="search-spinner" aria-hidden="true" /> Searching</>
+            ) : (
+              "Search"
+            )}
+          </button>
         </form>
 
         <section className="toolbar" aria-label="Tier filters">
@@ -262,15 +305,21 @@ export function App() {
                 type="button"
                 className={filterTier === tier ? "is-active" : ""}
                 onClick={() => setFilterTier(tier)}
+                disabled={search.loading}
               >
                 {tier}
               </button>
             ))}
           </div>
-          <p id="resultCount">{visibleResults.length} result{visibleResults.length === 1 ? "" : "s"}</p>
+          <p id="resultCount">{
+            search.status === "loading" ? "Searching..."
+              : search.status === "error" ? "Search error"
+              : search.status === "idle" ? "Ready"
+              : `${visibleResults.length} result${visibleResults.length === 1 ? "" : "s"}`
+          }</p>
         </section>
 
-        {search.answer?.answer ? (
+        {search.status === "ready" && search.answer?.answer ? (
           <AnswerPanel
             response={search.answer}
             onAnchorClick={(anchor) => {
@@ -286,7 +335,20 @@ export function App() {
           />
         ) : null}
 
-        <SearchResultsView citations={visibleResults} onOpen={viewer.openViewer} />
+        {search.status === "loading" ? (
+          <SearchSkeleton />
+        ) : search.status === "error" ? (
+          <SearchError
+            message={search.error}
+            onRetry={() => search.runSearch(search.query, tierState.tier)}
+          />
+        ) : search.status === "idle" ? (
+          <SearchIdle />
+        ) : visibleResults.length ? (
+          <SearchResultsView citations={visibleResults} onOpen={viewer.openViewer} />
+        ) : (
+          <EmptyResults filtered={search.results.length > 0} />
+        )}
         </>
         ) : (
           <PlaceholderView route={route} />
@@ -410,18 +472,60 @@ function SearchResultsView({ citations, onOpen }: {
   citations: Citation[];
   onOpen: (citation: Citation) => void;
 }) {
-  if (!citations.length) {
-    return (
-      <section className="empty-state">
-        <h2>No results found in vault</h2>
-      </section>
-    );
-  }
   return (
     <section className="results-list" aria-label="Ranked citations">
       {citations.map((citation, index) => (
         <ResultCard key={citation.chunk_id} rank={index + 1} citation={citation} onClick={() => onOpen(citation)} />
       ))}
+    </section>
+  );
+}
+
+// Skeleton placeholders shown while a query is in flight. Mirrors the result-card
+// layout so the list does not jump when real results arrive.
+function SearchSkeleton() {
+  return (
+    <section className="results-list" aria-label="Searching" aria-busy="true">
+      {[0, 1, 2].map((i) => (
+        <div key={i} className="result-card result-card--skeleton" aria-hidden="true">
+          <span className="result-card__rank skeleton-block" />
+          <span className="result-card__body">
+            <span className="skeleton-line skeleton-line--meta" />
+            <span className="skeleton-line" />
+            <span className="skeleton-line skeleton-line--short" />
+          </span>
+        </div>
+      ))}
+    </section>
+  );
+}
+
+function SearchError({ message, onRetry }: { message: string | null; onRetry: () => void }) {
+  return (
+    <section className="search-state search-state--error" role="alert">
+      <h2>Search failed</h2>
+      <p>{message ?? "Something went wrong running that query."}</p>
+      <button type="button" className="search-state__retry" onClick={onRetry}>
+        Try again
+      </button>
+    </section>
+  );
+}
+
+function SearchIdle() {
+  return (
+    <section className="search-state search-state--idle">
+      <h2>Search your vault</h2>
+      <p>Enter a query to retrieve ranked, byte-exact citations. Press Ctrl+K for the command palette.</p>
+    </section>
+  );
+}
+
+function EmptyResults({ filtered }: { filtered: boolean }) {
+  return (
+    <section className="empty-state">
+      <h2>No results found in vault</h2>
+      {filtered ? <p>No matches under the current tier filter — try the All tab.</p> : null}
     </section>
   );
 }

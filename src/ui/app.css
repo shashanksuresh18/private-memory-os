@@ -177,6 +177,16 @@ body {
   font-weight: 700;
 }
 
+.vault-row--skeleton {
+  pointer-events: none;
+}
+
+.vault-row--empty {
+  cursor: default;
+  color: var(--muted);
+  font-weight: 600;
+}
+
 .privacy-screen {
   grid-template-columns: minmax(0, 1fr);
 }
@@ -399,88 +409,100 @@ body {
 }
 
 
-/* ---- Answer layer (extraction) ---- */
-.answer-toggle {
-  border: 1px solid var(--border, #2a2f3a);
-  background: transparent;
-  color: var(--fg, #cdd3df);
-  border-radius: 8px;
-  padding: 6px 12px;
-  cursor: pointer;
+/* ---- Answer layer (extraction) ----
+   The themed, tier-aware answer-panel + answer-toggle styles live in
+   dashboard/styles.css. A dark-palette duplicate used to sit here and, because
+   app.css is imported after styles.css, it overrode the theme — leaving the
+   answer panel sky-blue on the cream workspace. Removed so the panel matches. */
+
+/* ---- Search states: spinner / loading skeleton / idle / error ----------- */
+.search-spinner {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  margin-right: 4px;
+  vertical-align: -2px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: citadel-spin 0.7s linear infinite;
 }
-.answer-toggle.is-active {
-  border-color: #38bdf8;
-  color: #38bdf8;
-  background: rgba(56, 189, 248, 0.10);
+@keyframes citadel-spin { to { transform: rotate(360deg); } }
+
+.search-shell input:disabled,
+.search-shell select:disabled,
+.search-shell button:disabled {
+  opacity: 0.55;
+  cursor: progress;
 }
 
-.answer-panel {
-  border: 2px solid #38bdf8;
-  border-left-width: 6px;
-  border-radius: 12px;
-  padding: 14px 16px;
-  background: rgba(56, 189, 248, 0.06);
+.search-state {
   display: grid;
-  gap: 10px;
-}
-.answer-panel[data-tier="S1"] { border-color: #38bdf8; background: rgba(56,189,248,0.06); }
-.answer-panel[data-tier="S2"] { border-color: #f59e0b; background: rgba(245,158,11,0.07); }
-.answer-panel[data-tier="S3"] { border-color: #f43f5e; background: rgba(244,63,94,0.07); }
-
-.answer-panel__head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.answer-panel__title { font-weight: 600; }
-.answer-panel__model {
-  font-size: 12px;
-  color: var(--muted, #8b93a3);
-}
-.answer-panel__pill {
-  font-size: 11px;
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: rgba(148,163,184,0.18);
-  color: #cbd5e1;
-}
-.answer-panel__pill--amber { background: rgba(245,158,11,0.18); color: #fbbf24; }
-.answer-panel__pill--rose { background: rgba(244,63,94,0.18); color: #fb7185; }
-.answer-panel__copy {
-  margin-left: auto;
-  border: 1px solid var(--border, #2a2f3a);
-  background: transparent;
-  color: var(--fg, #cdd3df);
-  border-radius: 6px;
-  padding: 4px 10px;
-  cursor: pointer;
-}
-.answer-panel__text {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 13px;
-  line-height: 1.5;
-  white-space: pre-wrap;
-  margin: 0;
-}
-.answer-panel__anchors {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
   gap: 8px;
+  justify-items: start;
+  border: 2px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: 0 4px 0 var(--line-strong);
+  padding: 26px;
 }
-.answer-panel__anchor {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 12px;
-  border: 1px solid currentColor;
-  background: transparent;
-  color: #93c5fd;
-  border-radius: 6px;
-  padding: 3px 8px;
-  cursor: pointer;
+.search-state h2 { margin: 0; font-size: 20px; }
+.search-state p { margin: 0; max-width: 560px; color: var(--muted); line-height: 1.55; }
+
+.search-state--idle {
+  border-style: dashed;
+  box-shadow: none;
 }
-.answer-panel__anchor:hover { text-decoration: underline; }
+.search-state--error {
+  border-color: var(--tier-s3);
+  box-shadow: 0 4px 0 color-mix(in srgb, var(--tier-s3) 45%, var(--line-strong));
+}
+.search-state--error h2 { color: var(--tier-s3); }
+.search-state__retry {
+  margin-top: 4px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--ink);
+  color: white;
+  padding: 8px 14px;
+  font-weight: 800;
+}
+
+.result-card--skeleton {
+  cursor: default;
+  pointer-events: none;
+}
+.result-card--skeleton:hover {
+  transform: none;
+  box-shadow: 0 4px 0 var(--line-strong);
+}
+.skeleton-block,
+.skeleton-line {
+  position: relative;
+  overflow: hidden;
+  background: var(--soft);
+  border-radius: var(--radius);
+}
+.skeleton-line { width: 100%; height: 14px; }
+.skeleton-line--meta { width: 40%; height: 16px; }
+.skeleton-line--short { width: 65%; }
+.skeleton-block { width: 40px; height: 40px; }
+.skeleton-block::after,
+.skeleton-line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--ink) 8%, transparent), transparent);
+  animation: citadel-shimmer 1.2s ease-in-out infinite;
+}
+@keyframes citadel-shimmer { to { transform: translateX(100%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .search-spinner,
+  .skeleton-block::after,
+  .skeleton-line::after { animation: none; }
+}
 
 /* --- Sidebar: prominent Add Document CTA ---------------------------------- */
 .sidebar-add {

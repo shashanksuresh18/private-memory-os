@@ -25,9 +25,11 @@ export function EvidenceVault({
   const [filter, setFilter] = React.useState<FilterTier>("All");
   const [pages, setPages] = React.useState<PageSummary[]>([]);
   const [message, setMessage] = React.useState("");
+  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     let cancelled = false;
+    setLoading(true);
     fetchPages(filter)
       .then((nextPages) => {
         if (!cancelled) {
@@ -37,6 +39,9 @@ export function EvidenceVault({
       })
       .catch(() => {
         if (!cancelled) setMessage("Vault inventory unavailable");
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
       });
     return () => {
       cancelled = true;
@@ -85,22 +90,35 @@ export function EvidenceVault({
           <span>Chunks</span>
           <span>Lines</span>
         </div>
-        {pages.map((page) => {
-          const sealed = page.tier === "S3";
-          return (
-            <button
-              key={page.page_path}
-              type="button"
-              className={sealed ? "vault-row vault-row--sealed" : "vault-row"}
-              onClick={() => openPage(page)}
-            >
-              <TierBadge tier={page.tier} />
-              <span className="vault-row__file">{basename(page.page_path)}</span>
-              <span>{sealed ? <b>SEALED</b> : formatNumber(page.chunk_count)}</span>
-              <span>{sealed ? "content sealed" : formatNumber(page.line_count)}</span>
-            </button>
-          );
-        })}
+        {loading ? (
+          [0, 1, 2, 3, 4].map((i) => (
+            <div key={i} className="vault-row vault-row--skeleton" aria-hidden="true">
+              <span className="skeleton-line skeleton-line--meta" />
+              <span className="skeleton-line" />
+              <span className="skeleton-line skeleton-line--short" />
+              <span className="skeleton-line skeleton-line--short" />
+            </div>
+          ))
+        ) : pages.length ? (
+          pages.map((page) => {
+            const sealed = page.tier === "S3";
+            return (
+              <button
+                key={page.page_path}
+                type="button"
+                className={sealed ? "vault-row vault-row--sealed" : "vault-row"}
+                onClick={() => openPage(page)}
+              >
+                <TierBadge tier={page.tier} />
+                <span className="vault-row__file">{basename(page.page_path)}</span>
+                <span>{sealed ? <b>SEALED</b> : formatNumber(page.chunk_count)}</span>
+                <span>{sealed ? "content sealed" : formatNumber(page.line_count)}</span>
+              </button>
+            );
+          })
+        ) : !message ? (
+          <div className="vault-row vault-row--empty">No pages indexed for this tier.</div>
+        ) : null}
       </div>
     </section>
   );
