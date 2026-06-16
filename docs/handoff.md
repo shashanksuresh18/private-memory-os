@@ -6,6 +6,30 @@ This handoff supersedes the prior `docs/handoff.md` that mis-scoped P0 as "close
 
 ---
 
+## SESSION 2026-06-15 — vault cleanup back to clean baseline + /ingest fixes on a branch
+
+**Recovery (start of session).** The prior session reportedly hung the full suite for >1h (suspected Ollama deadlock after a 155s gemma run). This session found **no actual deadlock**: API server already live (PID on :7734, `/health` 200, `cloudAllowed:false`, gbrain all `none`, S3 egress 12/12), Ollama responsive (`/api/tags` 200), no runaway python. Nothing needed killing or restarting.
+
+**`pytest-timeout` is now a required dev dependency.** It was not installed; installed `pytest-timeout 2.4.0`. **Always run the suite with a per-test cap** so a single slow Ollama/model call can never hang the whole run again: `python -m pytest tests/ -q -p no:cacheprovider --timeout=300 -x`. NOTE on the cap value: `--timeout=120` is **too tight** — `tests/retrieval/test_reranker_no_egress.py::test_cross_encoder_rerank_no_egress` does a cold `from sentence_transformers import CrossEncoder` (pulls transformers→tensorflow→keras) that can exceed 120s on a cold OS cache, and pytest-timeout's Windows "thread" method **kills the whole process** on expiry (one slow import → exit 1 for the entire suite). **Use `--timeout=300`.** The test itself is fine (passes in isolation; it is NOT a regression). `pytest-timeout` should be added to `requirements.txt` (not yet done).
+
+**/ingest fixes committed on a branch (NOT merged to main).** Branch **`fix/ingest-400-and-folder-routing`**, commit `07d22ca`, 4 files / +215 −31:
+- **Fix 1 — plain 400 on bad OR missing fields.** `IngestRequest` fields `content`/`doc_type`/`tier` are now `Optional[str] = None`, so both *invalid* and *missing* fields reach the handler and produce a plain-English **400** instead of a pydantic **422** validation wall. Handler tolerates `None` via `(body.x or "")`.
+- **Fix 2 — doc_type routes to its gbrain-base schema folder.** `meeting→meetings`, `memo→memos`, `company→companies`; `research`/`email` fall back to `inbox/` (`DOC_TYPE_FOLDER` map in `server.py`). Tier still lives in frontmatter, never the folder. Response gains `folder` + `path` fields. `/ingest` now indexes **only the page it wrote** via new `src/retrieval/index.py:ingest_page()` (delete-by-slug then re-insert) instead of a whole-vault `ingest_vault` sweep that re-embedded the auto-wiki backlog and stalled under Ollama contention — so returned `chunks` reflects the submitted doc alone.
+- **`AUTO_WIKI_ENABLED` kill-switch (default on).** New env var; when false, `/retrieve` stops spawning the background gemma concept-extraction daemon that otherwise accretes `vault/concepts/*.md` on every query. Documented in `.env.example`. `/ingest` never triggers auto-wiki.
+- Tests in `tests/api/test_ingest_endpoint.py`: missing+invalid 400 matrix, folder routing, single-page-only index (asserts `ingest_vault` is NOT called), submitted-doc chunk count.
+- **RECOMMENDATION: merge to `main` after one more review.** Not merged this session.
+
+**Vault cleaned back to clean baseline (124 pages).** Deleted **53 session test artifacts** (verified each, 0 missing): 14 inbox test docs (the 06-15 `/ingest` test cluster + `drop_test_memo.md` + the stray `inbox/test_s1_raw.md` from 06-01), 2 meetings + 1 memo (06-15 folder-routed copies), the **27 auto-wiki concept pages** dated 06-15 (incl. SEALED S3 `project-falcon`, `tidewater-analytics`, `project-kingfisher`, `financial-liquidity`, `regulatory-requirements`, `meridian-technologies`-concept), the stale `vault/wiki/index.md`, 5 archive test files (`test_s1/s2/s3.txt`, `drop_test_memo.pdf`, `archive/test_s1_raw.md`), plus repo-root `tmp_payloads/` + `junit_run.xml`. Baseline-real content (aapl/msft/googl filings, ~60 synced emails, calendar, real meetings/memos/companies/people, `board_meeting_2026_05_28.md`, the 26 pre-06-10 concepts) was kept. The handoff target was "~128" — exact clean baseline is **124**.
+
+**Rebuild caveat — Ollama embed timed out on first `--rebuild`, succeeded on warm retry.** `python -m scripts.ingest_new --rebuild` first failed with `httpx.ReadTimeout` on a `/api/embed` call (Ollama stalled past the 90s+retry budget — leftover contention from the prior stuck session; `reset=True` had already dropped the DB to 0). A single warm-up embed (`POST /api/embed` returned in 0.24s) confirmed Ollama healthy, and the **retry rebuilt cleanly: 124 pages, 1075 chunks, 0 skipped**. Lesson: warm nomic-embed before a full `reset=True` rebuild, or it can wipe the DB mid-run. `--rebuild` also calls `generate_index()` → `vault/wiki/index.md` regenerated fresh against the 124-page baseline.
+
+**Verification (all green):**
+- DB **124 pages** — S1 13 / S2 99 / S3 12 (was 168: S1 30 / S2 116 / S3 22). `chunks 1075 == vectors 1075`, 0 orphan vectors.
+- `test_no_egress_on_s3` → **12/12**.
+- Full suite → **189 passed, 1 skipped, 0 failures** (`--timeout=300`; skip = `llama3.2:3b` classifier integration, model not pulled).
+
+---
+
 ## CURRENT STATE (2026-06-13) — READ FIRST
 
 The retrieval engine is **BUILT and LIVE** (§1 below is historical; it predates the build). `src/retrieval/` ships chunker, embedder, BM25+vector+RRF search, bge reranker, eval, and the extraction `answer.py`; `src/api/server.py` serves it. All 3 gating tests exist and pass.
