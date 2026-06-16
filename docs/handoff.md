@@ -6,6 +6,33 @@ This handoff supersedes the prior `docs/handoff.md` that mis-scoped P0 as "close
 
 ---
 
+## SESSION 2026-06-16 — new-laptop / portability checklist
+
+How to stand up and test the system on a fresh machine. **Key principle: git carries the CODE, never the DATA.** A clean clone is a fully working system with zero content.
+
+**Transfers (tracked in git, on `origin/main`):** all `src/`, `tests/`, `requirements.txt`, `setup.bat`, `launch.bat`, `config/`, `docs/`.
+
+**Does NOT transfer (gitignored by design — see `.gitignore`):**
+- `vault/` — the MNPI corpus. A fresh clone has an **empty vault**. (Also note `vault/` is its own embedded git repo at `vault/.git`; cloning the outer repo records nothing of it.)
+- `retrieval.db` (repo-root canonical DB, 124 pages) + `*.db-wal`/`*.db-shm` — **not pushed**; rebuilds from `vault/`.
+- `.env` — secrets (`NEBIUS_API_KEY`, Gmail/Calendar OAuth). Re-enter by hand from `.env.example`.
+- `audit/`, `backups/`, `graphify-out/`, `node_modules/`, `dist/`, model weights.
+- Ollama models (~17GB `gemma4-citadel` + `nomic-embed-text`) — re-pull (`setup.bat` does this).
+
+**Stand-up steps (Windows):**
+1. Install prereqs: Python 3.11+ (3.12 OK), Node 22+, Ollama (native Windows installer), Git.
+2. `git clone https://github.com/shashanksuresh18/private-memory-os` (private repo → GitHub auth / `gh auth login` required).
+3. Run `setup.bat` — pip install `requirements.txt`, `npm install` + `npm run build`, `ollama pull nomic-embed-text` + `gemma4-citadel`, create `vault/raw/{s1,s2,s3}`, copy `.env.example`→`.env` (only if absent).
+4. Edit `.env` — add `NEBIUS_API_KEY` (+ `GMAIL_*`/`CALENDAR_*` only if using connectors). Gmail/Calendar refresh tokens are per-account; redirect URIs must be re-registered (see `scripts/reauth_gmail.py`).
+5. `launch.bat` — starts Ollama, API on `127.0.0.1:7734`, UI on `127.0.0.1:3003`, health-polls, opens browser.
+6. Smoke test: drop files into `vault\raw\{s1,s2,s3}` → wait for the 10-min scheduled `--reindex` (or run `python -m scripts.ingest_new --reindex`) → ask in UI. Or `python -m pytest tests/ -q -p no:cacheprovider --timeout=300` → expect **189 passed, 1 skipped** (skip = `llama3.2:3b` not pulled; `ollama pull llama3.2:3b` to un-skip).
+
+**Testing with the REAL vault (not an empty one):** move `vault/` only by **encrypted manual transfer** (BitLocker-protected drive / secure copy) — **never git, never cloud** (S3-never-cloud invariant). On the new machine, **BitLocker is mandatory** on the drive holding `vault/`, `audit/`, `backups/` before any real MNPI lands (CLAUDE.md operational rule). After copying the vault, run `python -m scripts.ingest_new --rebuild` to regenerate `retrieval.db` locally (warm `nomic-embed` first — see the 2026-06-15 rebuild caveat).
+
+**BLOCKER — mac not yet supported.** `setup.bat`/`launch.bat` are Windows `.bat`; the `src/platform/{windows,mac}.py` shims (CLAUDE.md) are not written. A new **Windows** laptop works today; **mac does not** — porting the launcher + OS-call shims is prerequisite work.
+
+---
+
 ## SESSION 2026-06-15 — vault cleanup back to clean baseline + /ingest fixes on a branch
 
 **Recovery (start of session).** The prior session reportedly hung the full suite for >1h (suspected Ollama deadlock after a 155s gemma run). This session found **no actual deadlock**: API server already live (PID on :7734, `/health` 200, `cloudAllowed:false`, gbrain all `none`, S3 egress 12/12), Ollama responsive (`/api/tags` 200), no runaway python. Nothing needed killing or restarting.
