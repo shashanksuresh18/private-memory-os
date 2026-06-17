@@ -35,14 +35,19 @@ jobs:
       - name: Install minimal deps for the gating suite
         run: |
           python -m pip install --upgrade pip
-          # Engine + atoms + graph gating tests:
-          #   - tiktoken (chunker)
-          #   - httpx (Ollama embedder constructor; never invoked on the S3
-          #     gating path, defense-in-depth refuses non-loopback URLs)
-          # The bge cross-encoder + Ollama-backed Alice acceptance tests
-          # skip gracefully when the local model cache / Ollama daemon is
-          # absent (CI runners have neither). pytest.skip != fail.
-          python -m pip install pytest tiktoken httpx
+          # Deps the gating tests need to IMPORT the retrieval engine:
+          #   - tiktoken      (chunker)
+          #   - httpx         (Ollama embedder constructor; never invoked on the
+          #                    S3 gating path, defense-in-depth refuses non-loopback)
+          #   - markitdown    (src/ingest/converter, imported via retrieval/index)
+          #   - python-dotenv (engine config load)
+          # All local, no network. Non-gating test modules that drag in heavier
+          # optional stacks (fastapi/requests, google-auth via fetch_gmail,
+          # watchdog via the vault bridge) are skip-collected by tests/conftest.py
+          # when their deps are absent, so the install set stays small.
+          # The bge cross-encoder + Ollama-backed acceptance tests skip gracefully
+          # when the local model cache / Ollama daemon is absent. pytest.skip != fail.
+          python -m pip install pytest tiktoken httpx markitdown python-dotenv
 
       - name: Confirm egress-fenced env (no API keys leak into CI)
         run: |
