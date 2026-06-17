@@ -11,6 +11,7 @@ import type { Stats } from "../../api";
 
 const WORKSPACE: NavSpec[] = [
   { href: "/command-centre", icon: "grid", label: "Command Centre" },
+  { href: "/compare", icon: "columns", label: "Compare", badge: "CLOUD" },
   { href: "/graph", icon: "share", label: "Graph" },
   { href: "/vault", icon: "folder", label: "Evidence Vault", countKey: "chunks" },
   { href: "/memo", icon: "file", label: "Memos", countKey: "meetings" },

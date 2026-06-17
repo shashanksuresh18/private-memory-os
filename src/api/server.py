@@ -38,6 +38,7 @@ from src.retrieval.auto_wiki import run_auto_wiki
 from src.retrieval.index import ingest_page, ingest_vault
 from src.ingest.structurer import DOC_TYPES, structure_content
 from src.memory.graph.db import DEFAULT_DB_PATH as GRAPH_DB_PATH
+from src.api.compare.routes import router as compare_router
 
 SERVER_HOST = "127.0.0.1"
 SERVER_PORT = 7734
@@ -414,6 +415,11 @@ app.add_middleware(
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["Content-Type"],
 )
+
+# Multi-Model Compare / Council mode (cloud-only, normal chat feature). Mounted
+# under /api/compare. Independent of the retrieval engine + tier routing; see
+# src/api/compare/.
+app.include_router(compare_router)
 
 
 @app.on_event("startup")

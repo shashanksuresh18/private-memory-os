@@ -23,6 +23,29 @@ No Odysseus source code was copied verbatim. The interaction and visual patterns
 were studied and reimplemented from scratch in this project's existing
 React / Vite / TypeScript stack, against our own cream-themed design tokens.
 
+### Compare / Council Mode
+
+The Multi-Model Compare / Council feature (`src/api/compare/`, `src/ui/compare/`)
+is directly inspired by Odysseus's **Compare** feature
+(`routes/compare_routes.py`, `static/js/compare/{index,stream,vote,scoreboard}.js`).
+The following ideas were studied and adapted:
+
+- sending one prompt to multiple models and showing one pane per model
+- running model calls independently / in parallel
+- blind comparison with neutral labels (`Model A`, `Model B`) and server-side
+  mapping so identities cannot leak before reveal
+- voting for a winner / tie, then revealing the model names
+- a wins/losses/ties scoreboard aggregated from vote history
+- per-pane latency, token counts, and timeout/error handling
+- an optional synthesis ("council") step over the completed responses
+
+These were reimplemented cleanly in our stack: a provider-agnostic FastAPI
+backend that exposes only configured **cloud** providers, DLP-scrubs every
+outbound prompt, and persists **hash-only** vote history; and a React/Vite/TS
+front end using our own components and design tokens. No Odysseus code was
+copied verbatim. Odysseus is AGPL-licensed; this is an independent
+reimplementation, credited here.
+
 ## Components & Libraries
 
 See `CLAUDE.md` ("Trusted Components & Swaps") for the full supply-chain audit

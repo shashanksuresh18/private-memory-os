@@ -3,7 +3,7 @@ import { cn } from "./utils";
 
 export type IconName =
   | "search" | "settings" | "shield" | "folder" | "file" | "users" | "grid"
-  | "refresh" | "plug" | "chevron-down" | "share";
+  | "refresh" | "plug" | "chevron-down" | "share" | "columns";
 
 const paths: Record<IconName, React.ReactNode> = {
   search: <path d="m21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z" />,
@@ -17,6 +17,7 @@ const paths: Record<IconName, React.ReactNode> = {
   plug: <path d="M9 2v6M15 2v6M6 8h12v3a6 6 0 0 1-12 0V8Zm6 9v5" />,
   "chevron-down": <path d="m6 9 6 6 6-6" />,
   share: <><circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4" /></>,
+  columns: <path d="M4 4h7v16H4V4Zm9 0h7v16h-7V4Z" />,
 };
 
 export function Icon({ name, size = 14, className }: { name: IconName; size?: number; className?: string }) {

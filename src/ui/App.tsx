@@ -6,17 +6,19 @@ import { EvidenceVault } from "./EvidenceVault";
 import { CRM } from "./CRM";
 import { AddDocument } from "./AddDocument";
 import { PrivacyRouting } from "./PrivacyRouting";
+import { CompareMode } from "./compare/CompareMode";
 import { MOCK_CITATIONS, type Citation, type CitationAnchor, type Tier } from "./types";
 
 type TierContext = Tier | "Auto";
 type FilterTier = Tier | "All";
-type AppRoute = "/command-centre" | "/graph" | "/vault" | "/memo" | "/crm" | "/add" | "/audit" | "/gbrain" | "/connectors" | "/settings";
+type AppRoute = "/command-centre" | "/compare" | "/graph" | "/vault" | "/memo" | "/crm" | "/add" | "/audit" | "/gbrain" | "/connectors" | "/settings";
 
 const TIER_RANK: Record<Tier, number> = { S1: 1, S2: 2, S3: 3 };
 const SEARCH_TIERS: TierContext[] = ["Auto", "S1", "S2", "S3"];
 const FILTER_TIERS: FilterTier[] = ["All", "S1", "S2", "S3"];
 const ROUTES = new Set<AppRoute>([
   "/command-centre",
+  "/compare",
   "/graph",
   "/vault",
   "/memo",
@@ -249,7 +251,9 @@ export function App() {
           }}
         />
 
-        {route === "/graph" ? (
+        {route === "/compare" ? (
+          <CompareMode />
+        ) : route === "/graph" ? (
           <GraphView resolvedTier={tierState.resolvedTier} onSelectNode={onGraphSelect} />
         ) : route === "/vault" ? (
           <EvidenceVault stats={stats} onOpenCitation={viewer.openViewer} />
@@ -365,7 +369,7 @@ export function App() {
 }
 
 function PlaceholderView({ route }: { route: AppRoute }) {
-  const copy: Record<Exclude<AppRoute, "/command-centre" | "/graph" | "/crm" | "/add">, { title: string; body: string; status: string }> = {
+  const copy: Record<Exclude<AppRoute, "/command-centre" | "/compare" | "/graph" | "/crm" | "/add">, { title: string; body: string; status: string }> = {
     "/vault": {
       title: "Evidence Vault",
       body: "Vault files are indexed locally from markdown under vault/. Search and citation viewing are live in Command Centre; this section will become the file browser.",

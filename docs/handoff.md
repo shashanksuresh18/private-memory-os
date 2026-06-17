@@ -6,6 +6,32 @@ This handoff supersedes the prior `docs/handoff.md` that mis-scoped P0 as "close
 
 ---
 
+## SESSION 2026-06-17 — Multi-Model Compare / Council mode (cloud-only, Odysseus-inspired)
+
+New standalone **Compare / Council** workspace feature: send one prompt to 2+ **cloud** models in parallel, one pane per model, blind mode + reveal, voting, hash-only scoreboard/history, per-model metrics, timeout/error handling, and an optional Council synthesis step. It is a **normal chat feature, fully separate from the S1/S2/S3 retrieval tier engine** — it does not touch `/retrieve`, `/ingest`, `_block_non_loopback_sockets`, the classifier, or tier routing (server.py change = one `include_router` line + one import). Design + UX adapted from PewDiePie's AGPL [Odysseus](https://github.com/pewdiepie-archdaemon/odysseus) Compare feature (`routes/compare_routes.py`, `static/js/compare/{index,stream,vote,scoreboard}.js`); studied + reimplemented in our stack, no code copied. Credited in `ACKNOWLEDGMENTS.md`.
+
+**Locked product decisions (user):** cloud-only (no local/Ollama models in this feature, ChatGPT-vs-Claude feel); provider registry/seam exposing **only configured** providers; DLP-scrub every outbound prompt; build synthesis now; persist vote history + scoreboard server-side, **hash-only**; **non-streaming v1** (matches stack — nothing streams today; SSE documented as follow-up).
+
+**Backend — new package `src/api/compare/`:**
+- `providers.py` — provider-agnostic registry. `ModelResult` dataclass; `Provider` base (timing + tiktoken token estimate + timeout/error classification); `NebiusProvider` reuses the existing `answer._nebius_chat` seam; `AnthropicProvider` (`_anthropic_chat`, POST `/v1/messages`) + `OpenAIProvider` (`_openai_chat`) are thin monkeypatchable seams **inert until `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` are set**. Static `_MODEL_REGISTRY` (Python, not YAML — avoids an undeclared PyYAML dep): DeepSeek-V3.2 (active), Claude Opus 4.8, GPT-4o. `available_models()` returns only configured providers, so unconfigured ones are never selectable.
+- `sessions.py` — in-memory session store. Blind mapping (`Model A/B/…`, shuffled) held **server-side** so model identity never reaches the browser until reveal/vote. Capped + oldest-evicted; ephemeral (lost on restart).
+- `history_db.py` + `compare_schema.sql` — SQLite `compare_history.db` (repo root, gitignored by `*.db`). **Hash-only**: stores `prompt_sha256`, per-pane `response_sha256` + metadata, never plaintext. `scoreboard()` aggregates wins/losses/ties/games/win% per model id.
+- `routes.py` — `APIRouter(prefix="/api/compare")`, 7 endpoints: `GET /models`, `POST /start` (≥2 configured models else plain 400), `POST /run` (one pane; `redact_pii(prompt)` before the cloud call; per-pane status `ok|error|timeout`), `POST /reveal`, `POST /vote` (records hash-only history, reveals), `POST /synthesize` (Council prompt over completed answers; failure → 500 with clear detail, comparison untouched), `GET /history`. **Parallelism = N concurrent `/run` fetches in FastAPI's sync threadpool** (no asyncio). Test-injectable history DB via `app.state.compare_db_path`.
+
+**Frontend — new `src/ui/compare/`:** `compare-api.ts` (fetch client, same throw-on-error style as `api.ts`), `useCompare.ts` (session state machine; `runAll` fires all panes in parallel with per-pane `AbortController` + 75s client-timeout backstop; `stopAll`, `retryPane`, `reset`, `vote`, `reveal`, `runSynthesize`), `ComparePane.tsx` (skeleton/ready/error/timeout states, latency + token metrics, CLOUD badge, winner/loser styling, vote/retry), `CompareToolbar.tsx` (configured-models multiselect, blind toggle, prompt, Run/Stop/Reset + cloud-egress warning banner), `Scoreboard.tsx` (modal table), `CompareMode.tsx` (composes grid + vote bar + synthesis panel + scoreboard). Wired into `App.tsx` (`/compare` route + render branch), sidebar WORKSPACE nav (`Compare`, CLOUD badge, new `columns` icon), and `dashboard/styles.css` (cream-theme `.compare-*` block). Build = **49 modules, zero errors** (was 43).
+
+**Safety preserved:** S3 no-egress unchanged (`test_no_egress_on_s3` → **12/12**). No local models; nothing here runs under the S3 fence (intentional cloud feature, gated by explicit model selection). Every outbound prompt + every answer forwarded to the synth model is `redact_pii`-scrubbed. Disk persistence is hashes only.
+
+**Tests — `tests/api/test_compare.py` (12, all green):** registry exposes only configured providers (Nebius-only → just DeepSeek; add ANTHROPIC → Claude appears; OpenAI absent); start requires ≥2 models + a prompt; rejects unconfigured model; partial failure (one pane errors, the other keeps its output); transport `requests.Timeout` → pane `status=timeout`; blind hides names through `/run`, `/reveal` exposes them; vote reveals + writes a history row that contains **no** prompt/response/email plaintext on disk (canary scan of `compare_history.db*`) + scoreboard win/loss correct; prompt DLP-scrubbed before reaching the mocked cloud transport (`[EMAIL]`, no raw address); synthesis success; **synthesis failure → 500 + comparison intact** (a later `/run` on the same session still works). Uses `TestClient` + monkeypatched `answer._nebius_chat` / `providers._anthropic_chat`, no real network.
+
+**FOLLOW-UPS (noted, NOT done):**
+1. **SSE streaming** (`/api/compare/stream`) for live per-pane tokens — deferred; v1 is spinner→final to match the stack. Adapt Odysseus `stream.js` TTFT/idle-timeout/finish-order ideas.
+2. **Real provider token usage** — Nebius reuse returns text only, so token counts are tiktoken **estimates** (`~N tok`). Have the seams surface `usage.{input,output}_tokens` for exact counts.
+3. **Activate Claude/OpenAI** by setting their keys in `.env` (commented in `.env.example`); confirm `_anthropic_chat`/`_openai_chat` against live APIs (consult the `claude-api` skill for the current Anthropic Messages shape + model id before relying on it).
+4. **Vitest** for `useCompare` state transitions — no front-end test infra wired yet (build + backend tests cover this pass).
+
+---
+
 ## SESSION 2026-06-16 (b) — UI polish: stale-results fix + loading/error/empty states + Odysseus-inspired refinement
 
 Front-end-only pass (no Python touched, no engine/tier/egress code changed). Goal: fix the stale-search-results UX bug and broadly polish the workspace UI, drawing interaction inspiration from PewDiePie's AGPL [Odysseus](https://github.com/pewdiepie-archdaemon/odysseus) workspace (studied, not copied).
